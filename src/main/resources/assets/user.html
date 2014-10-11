@@ -176,8 +176,11 @@ $(document).ready(function() {
     displayUserData(fakeData);
   } else {
     $.ajax({
-      url: userUrl,
+      url: userUrl
     }).done(displayUserData);
+    $.ajax({
+      url: "/participation" + userUrl
+    }).done(displayParticipationData);
   }
 });
 
@@ -235,6 +238,18 @@ function displayUserData(data) {
   prepareEditableObjs(".catalyzer-user-name", "name");
   prepareEditableObjs(".catalyzer-user-subtitle", "subtitle");
   prepareEditableObjs(".catalyzer-user-motivation", "motivation");
+}
+
+function displayParticipationData(data) {
+  var container = $("catalyzer-user-participation");
+  container.empty();
+  for (var i = 0; i < data.length; i++) {
+    var element = data[i];
+    var name = element["name"];
+    var id = element["id"];
+    container.append($("<li>").append(
+        $("<a href='project.html#" + id + "'>" + name + "</a>")));
+  }
 }
 </script>
 

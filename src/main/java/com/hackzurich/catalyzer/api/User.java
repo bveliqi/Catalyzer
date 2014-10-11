@@ -15,7 +15,8 @@ public class User {
     private int avatar;
     private double longitude;
     private double latitude;
-
+    private String motivation;
+    private String subtitle;
 
     public long getId() {
         return id;
@@ -32,7 +33,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getEmail() {
         return email;
@@ -98,4 +98,19 @@ public class User {
         this.latitude = latitude;
     }
 
+    public String getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
 }
