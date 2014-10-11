@@ -5,7 +5,9 @@ $(function() {
 	function showSuccess(element, msg) {
 		element.find(".notify-success").text(msg);
 		element.find("input").hide();
+		element.find("textarea").hide();
 		element.find(".supportProject").hide();
+		element.find(".participateProject").hide();
 	}
 	
 	function showError(element, msg) {
@@ -50,6 +52,25 @@ $(function() {
 				var startDate = project.startDate;
 				console.log("Start date: " + startDate + " => " + new Date(startDate));
 				
+				var participantsHtml = "";
+				$.get("/project/" + project.id, function(result) {
+					for (var i = 0; i < result["applyingUsers"].length; i++) {
+						var user = result["applyingUsers"][i];
+						if (i % 3) {
+							participantsHtml += '<div class="row">';		
+						}
+						participantsHtml += '<div class="col-md-1">' +
+						'  <img class="supporters-img" src="img/avatar' + user["avatar"] + '.jpg" />' +
+						'</div>';
+						if (i % 3) {
+							participantsHtml += '</div>';
+						}
+					}
+					if (!(result["applyingUsers"].length % 3)) {
+						participantsHtml += '</div>';
+					}
+				});
+				
 				var html = '<div class="row gap">' +
 		'		<div class="col-md-4">' +
 		'			<img src="' + project.photoUrl +
@@ -79,41 +100,10 @@ $(function() {
 		'		</div>' +
 		'		<div class="col-md-2">' +
 		'			<h4 class="projects-supporters">Participants</h4>' +
+		participantsHtml +
 		'			<div class="row">' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar1.jpg" />' +
-		'				</div>' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar2.jpg" />' +
-		'				</div>' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar3.jpg" />' +
-		'				</div>' +
-		'			</div>' +
-		'			<div class="row">' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar4.jpg" />' +
-		'				</div>' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar5.jpg" />' +
-		'				</div>' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar6.jpg" />' +
-		'				</div>' +
-		'			</div>' +
-		'			<div class="row">' +
-		'				<div class="col-md-1">' +
-		'					<img class="supporters-img" src="img/avatar7.jpg" />' +
-			'			</div>' +
-				'		<div class="col-md-1">' +
-					'		<img class="supporters-img" src="img/avatar8.jpg" />' +
-						'</div>' +
-						'<div class="col-md-1">' +
-						'	<img class="supporters-img" src="img/avatar9.jpg" />' +
-						'</div>' +
-					'</div>' +
-		'			<div class="row">' +
-						'<button class="btn btn-primary" style="margin-left: 20px;">Participate</button>' +
+						'<button class="btn btn-primary" style="margin-left: 20px;" data-target="#participateModal' + project.id + '" data-toggle="modal">Participate</button>' +
+						'<a href="project.html#' + project.id + '" class="btn btn-info" style="margin-left: 20px;">More info</a>' +
 					'</div>' +
 				'</div>' +
 			'</div>' +
@@ -139,6 +129,30 @@ $(function() {
 				'		</div>' +
 				'		<div class="modal-footer">' +
 				'			<button type="button" class="btn btn-default btn-vote-modal closeSupportProject" data-dismiss="modal" data-id="' + project.id + '">Close</button>' +
+				'		</div>' +
+				'	</div>' +
+				'</div>' +
+			'</div>' +
+			'<div class="modal" id="participateModal' + project.id + '">' +
+				'<div class="modal-dialog">' +
+				'	<div class="modal-content">' +
+				'		<div class="modal-header">' +
+				'			<button type="button" class="close closeParticipateProject" data-dismiss="modal">' +
+				'				<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>' +
+				'			</button>' +
+				'			<h4 class="modal-title">Participate in the project</h4>' +
+				'		</div>' +
+				'		<div class="modal-body">' +
+				'			<div class="note">Join the activity and have a positive impact on the world</div>' +
+				'			<textarea class="reason" placeholder="Say something about yourself"></textarea>' +
+				'			<div class="centered">' +
+				'				<div class="notify-success"></div>' +
+				'				<div class="notify-fail"></div>' +
+				'			</div>' +
+				'		</div>' +
+				'		<div class="modal-footer">' +
+				'			<button type="button" class="btn btn-primary btn-vote-modal participateProject" data-id="' + project.id + '">Participate</button>' +
+				'			<button type="button" class="btn btn-default btn-vote-modal closeParticipateProject" data-dismiss="modal" data-id="' + project.id + '">Close</button>' +
 				'		</div>' +
 				'	</div>' +
 				'</div>' +
@@ -169,4 +183,30 @@ $(function() {
 		reset($("#votingModal" + id));
 		loadProjects();
 	});
+
+	$(document).on("click", ".participateProject", function() {
+		
+		var id = $(this).attr("data-id");
+		var reason = $("#participateModal" + id).find(".reason").text();
+		console.log("Participating in project " + id);
+		
+		var participation = {"projectId":id, "userId":"17", "role":"participant", "reason": reason, "state": "applying"};
+		
+		var request = $.ajax({
+            type        :   "POST",
+            url         :   "/participation/",
+            data        :   JSON.stringify(participation),
+            contentType :   "application/json"
+		}).done(function(data) {
+			showSuccess($("#participateModal" + id), "You joined successfully");
+		}).fail(function(data) {
+			if (data.status === 201) {
+				showSuccess($("#participateModal" + id), "You joined successfully");
+			} else {
+				showError($("#participateModal" + id), "Something went wrong :(");
+			}
+		});
+		
+	});
+	
 });
