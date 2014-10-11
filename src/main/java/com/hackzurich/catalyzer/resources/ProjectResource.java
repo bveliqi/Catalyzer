@@ -70,4 +70,26 @@ public class ProjectResource {
         projectDao.upvote(id, points);
     }
 
+
+    @POST
+    @Path("{id}/name")
+    @Timed
+    public void updateName(@PathParam("id") long id, @FormParam("name") String name) {
+        if(projectDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        projectDao.updateName(id, name);
+    }
+
+
+    @POST
+    @Path("{id}/motivation")
+    @Timed
+    public void updateMotivation(@PathParam("id") long id, @FormParam("motivation") String motivation) {
+        if(projectDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        projectDao.updateMotivation(id, motivation);
+    }
+
 }

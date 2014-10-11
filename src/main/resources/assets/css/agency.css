@@ -17,6 +17,19 @@ body {
     color: #fed136;
 }
 
+div.saving div.container {
+  font-size: 18px;
+  position: fixed;
+  background-color: #eee;
+  padding: 1em;
+  margin-top: 10em;
+  left: 40%;
+  width: 20%;
+  text-align: center;
+  border: 1px solid black;
+  z-index: 100000000;
+}
+
 p {
     font-size: 14px;
     line-height: 1.75;
@@ -264,6 +277,17 @@ fieldset[disabled] .btn-xl.active {
 
 .index-header {
     background-image: url(../img/charity_water.jpg);
+}
+
+.user-header {
+    background-image: url(../img/header-bg.jpg);
+}
+
+.about-user textarea, header textarea, h4 textarea {
+  background-color: transparent;
+  vertical-align:middle;
+  text-align:center;
+  border: none;
 }
 
 header {

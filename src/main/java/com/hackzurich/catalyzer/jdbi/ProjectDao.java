@@ -55,4 +55,15 @@ public interface ProjectDao {
     @SqlUpdate("UPDATE PROJECTS SET points = points + :morePoints WHERE id = :id")
     void upvote(@Bind("id") long id, @Bind("morePoints") int morePoints);
 
+
+
+    @SqlUpdate("UPDATE PROJECTS SET name = :name WHERE id = :id")
+    void updateName(@Bind("id") long id, @Bind("name") String name);
+
+
+    @SqlUpdate("UPDATE PROJECTS SET motivation = :motivation WHERE id = :id")
+    void updateMotivation(@Bind("id") long id, @Bind("motivation") String motivation);
+
+
+
 }

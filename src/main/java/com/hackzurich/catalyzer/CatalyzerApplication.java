@@ -1,7 +1,9 @@
 package com.hackzurich.catalyzer;
 
+import com.hackzurich.catalyzer.jdbi.ParticipationDao;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
 import com.hackzurich.catalyzer.jdbi.UserDao;
+import com.hackzurich.catalyzer.resources.ParticipationResource;
 import com.hackzurich.catalyzer.resources.ProjectResource;
 import com.hackzurich.catalyzer.resources.UserResource;
 
@@ -15,7 +17,6 @@ import org.skife.jdbi.v2.DBI;
 
 import java.net.UnknownHostException;
 
-//import com.hackzurich.catalyzer.jdbi.UserProjectDao;
 
 /**
  * Created by behar on 11.10.14.
@@ -33,7 +34,6 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
 
     @Override
     public void initialize(Bootstrap<CatalyzerConfiguration> bootstrap) {
-        // nothing to do yet
     	bootstrap.addBundle(new AssetsBundle());
     }
 
@@ -45,9 +45,11 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
         final ProjectDao projectDao = jdbi.onDemand(ProjectDao.class);
         final UserDao userDao = jdbi.onDemand(UserDao.class);
+        final ParticipationDao participationDao = jdbi.onDemand(ParticipationDao.class);
 
         environment.jersey().register(new ProjectResource(projectDao));
         environment.jersey().register(new UserResource(userDao));
+        environment.jersey().register(new ParticipationResource(participationDao));
 
     }
 
