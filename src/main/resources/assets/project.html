@@ -189,9 +189,7 @@
     <script src="js/jquery-1.11.0.js"></script>
 
 <script type="text/javascript">
-var outerParts = document.URL.split("#");
-var parts = outerParts[0].split("/");
-var projectUrl = parts[0] + "//" + parts[1] + "/projects/" + outerParts[1];
+var projectUrl = "/projects/" + window.location.hash.substring(1);
 
 $(document).ready(function() {
   console.log("Loading data from URL: " + projectUrl);
