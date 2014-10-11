@@ -55,7 +55,8 @@ public class ProjectResource {
     @Path("/new")
     public long insert() {
         Project project = new Project();
-        final User author = getAuthor();
+        final long authorId = getAuthorId();
+        project.setAuthorId(authorId);
         project.setName("Helping ppl in neighbourhood");
         project.setCategory("Whatever");
         project.setMotivation("Helping ppl");
@@ -63,19 +64,17 @@ public class ProjectResource {
         project.setPointsThreshold(30);
         project.setStatus("OK");
         project.setStartDate(new Timestamp(DateTime.now().getMillis()));
-        long id = projectDao.insert(project, author);
+        long id = projectDao.insert(project);
         return id;
     }
 
     private long getAuthorId() {
-        final User author = new User();
-        author.setName("Behar Veliqi");
-        final long id = userDao.insert(author);
-        return id;
+        final User author = userDao.getById(13);
+        return author.getId();
     }
 
     private User getAuthor() {
-        final User author = userDao.getById(1);
+        final User author = userDao.getById(13);
         return author;
     }
 

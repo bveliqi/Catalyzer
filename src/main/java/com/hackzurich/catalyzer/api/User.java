@@ -13,6 +13,8 @@ public class User {
     private int points;
     private int totalPoints;
     private int avatar;
+//    private double longitude;
+//    private double lattitude;
 
 
     public long getId() {
@@ -79,5 +81,21 @@ public class User {
     public void setAvatar(int avatar) {
         this.avatar = avatar;
     }
+
+//    public double getLongitude() {
+//        return longitude;
+//    }
+//
+//    public void setLongitude(double longitude) {
+//        this.longitude = longitude;
+//    }
+//
+//    public double getLattitude() {
+//        return lattitude;
+//    }
+//
+//    public void setLattitude(double lattitude) {
+//        this.lattitude = lattitude;
+//    }
 
 }
