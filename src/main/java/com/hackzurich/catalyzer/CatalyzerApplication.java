@@ -10,6 +10,10 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
 
+import java.net.UnknownHostException;
+
+//import com.hackzurich.catalyzer.jdbi.UserProjectDao;
+
 /**
  * Created by behar on 11.10.14.
  */
@@ -31,16 +35,17 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
 
     @Override
     public void run(CatalyzerConfiguration configuration,
-                    Environment environment) throws ClassNotFoundException {
+                    Environment environment) throws ClassNotFoundException, UnknownHostException {
 
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
         final ProjectDao projectDao = jdbi.onDemand(ProjectDao.class);
         final UserDao userDao = jdbi.onDemand(UserDao.class);
 
-        environment.jersey().register(new ProjectResource(projectDao));
+        environment.jersey().register(new ProjectResource(projectDao, userDao));
         environment.jersey().register(new UserResource(userDao));
 
     }
+
 
 }

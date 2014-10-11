@@ -2,10 +2,14 @@ package com.hackzurich.catalyzer.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Project;
+import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
+import com.hackzurich.catalyzer.jdbi.UserDao;
+import org.joda.time.DateTime;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -16,9 +20,11 @@ import java.util.List;
 public class ProjectResource {
 
     private final ProjectDao projectDao;
+    private final UserDao userDao;
 
-    public ProjectResource(ProjectDao projectDao) {
+    public ProjectResource(ProjectDao projectDao, UserDao userDao) {
         this.projectDao = projectDao;
+        this.userDao = userDao;
     }
 
     @GET
@@ -32,7 +38,12 @@ public class ProjectResource {
     @GET
     @Path("{id}")
     public Project getById(@PathParam("id") long id) {
-        return projectDao.getById(id);
+        final Project project = projectDao.getById(id);
+        final List<User> acceptedUsers = projectDao.getAllAcceptedUsers(id);
+        final List<User> appliedUsers = projectDao.getAllAppliedUsers(id);
+        project.setApplyingUsers(appliedUsers);
+        project.setApprovedUsers(acceptedUsers);
+        return project;
     }
 
     @GET
@@ -44,20 +55,29 @@ public class ProjectResource {
     @Path("/new")
     public long insert() {
         Project project = new Project();
-//        final User author = new User();
-//        author.setName("Behar Veliqi");
-//        project.setAuthor(author);
-        project.setAuthor("Behar Veliqi");
+        final User author = getAuthor();
         project.setName("Helping ppl in neighbourhood");
         project.setCategory("Whatever");
         project.setMotivation("Helping ppl");
         project.setPhotoUrl("/a/b/c.jpg");
         project.setPointsThreshold(30);
         project.setStatus("OK");
-        long id = projectDao.insert(project);
+        project.setStartDate(new Timestamp(DateTime.now().getMillis()));
+        long id = projectDao.insert(project, author);
         return id;
     }
 
+    private long getAuthorId() {
+        final User author = new User();
+        author.setName("Behar Veliqi");
+        final long id = userDao.insert(author);
+        return id;
+    }
+
+    private User getAuthor() {
+        final User author = userDao.getById(1);
+        return author;
+    }
 
 
 }

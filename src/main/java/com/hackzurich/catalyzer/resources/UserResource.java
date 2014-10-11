@@ -38,6 +38,10 @@ public class UserResource {
     public long insert() {
         User user = new User();
         user.setName("Behar Veliqi");
+        user.setEmail("behar@veliqi.de");
+        user.setEmailConfirmed(false);
+        user.setAvatar(0);
+        user.setPassword("klfrhekfhkshfkjd");
         long id = userDao.insert(user);
         return id;
     }

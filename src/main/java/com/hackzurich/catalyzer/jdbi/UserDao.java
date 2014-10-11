@@ -14,9 +14,9 @@ public interface UserDao {
 
     @GetGeneratedKeys
     @SqlUpdate("insert into USERS " +
-            "(name)" +
+            "(name, email, password, emailConfirmed, points, totalPoints, avatar)" +
             " values " +
-            "(:name)")
+            "(:name, :email, :password, :emailConfirmed, :points, :totalPoints, :avatar)")
     long insert(@BindBean User user);
 
 
@@ -28,6 +28,8 @@ public interface UserDao {
     @MapResultAsBean
     @SqlQuery("select * from USERS LIMIT :from, :number")
     List<User> getAll(@Bind("from") int from, @Bind("number") int number);
+
+
 
 
 }

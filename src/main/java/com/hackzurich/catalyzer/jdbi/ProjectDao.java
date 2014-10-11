@@ -1,6 +1,7 @@
 package com.hackzurich.catalyzer.jdbi;
 
 import com.hackzurich.catalyzer.api.Project;
+import com.hackzurich.catalyzer.api.User;
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.helpers.MapResultAsBean;
 
@@ -14,10 +15,19 @@ public interface ProjectDao {
 
     @GetGeneratedKeys
     @SqlUpdate("insert into PROJECTS " +
-            "(author, name, motivation, photoUrl, category, pointsThreshold, status)" +
+            "(authorId, name, motivation, photoUrl, category, pointsThreshold, status)" +
             " values " +
-            "(:author, :name, :motivation, :photoUrl, :category, :pointsThreshold, :status)")
+            "(:authorId, :name, :motivation, :photoUrl, :category, :pointsThreshold, :status)")
     long insert(@BindBean Project project);
+
+    @GetGeneratedKeys
+    @SqlUpdate("insert into PROJECTS " +
+            "(authorId, name, motivation, photoUrl, category, pointsThreshold, " +
+            "status, startDate, endDate)" +
+            " values " +
+            "(:u.id, :p.name, :p.motivation, :p.photoUrl, :p.category, :p.pointsThreshold, " +
+            ":p.status, :p.startDate, :p.endDate)")
+    long insert(@BindBean("p") Project project, @BindBean("u") User user);
 
 
     @MapResultAsBean
@@ -29,5 +39,19 @@ public interface ProjectDao {
     @SqlQuery("select * from PROJECTS LIMIT :from, :number")
     List<Project> getAll(@Bind("from") int from, @Bind("number") int number);
 
+    @MapResultAsBean
+    @SqlQuery("SELECT u.id, u.name" +
+            " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
+            " WHERE up.projectId = :id AND up.state = 'ACCEPTED' " +
+            " AND p.id = up.projectId AND u.id = up.userId")
+    List<User> getAllAcceptedUsers(@Bind("id") long id);
+
+
+    @MapResultAsBean
+    @SqlQuery("SELECT u.id, u.name" +
+            " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
+            " WHERE up.projectId = :id AND up.state = 'APPLYING' " +
+            " AND p.id = up.projectId AND u.id = up.userId")
+    List<User> getAllAppliedUsers(@Bind("id") long id);
 
 }

@@ -1,23 +1,30 @@
 package com.hackzurich.catalyzer.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
+import java.util.List;
+
 /**
  * Created by behar on 11.10.14.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Project {
 
 
     private long id;
-//    private User author;
-    private String author;
+    private long authorId;
     private String name;
     private String motivation;
     private String photoUrl;
-//    private List<String> keywords;
     private String category; // TODO: better to use enum?
     private int pointsThreshold;
     private String status;
-//    private List<User> applyingUsers;
-//    private List<User> approvedUsers;
+    private List<User> applyingUsers;
+    private List<User> approvedUsers;
+    private DateTime startDate;
+    private DateTime endDate;
 
 
     public long getId() {
@@ -28,18 +35,14 @@ public class Project {
         this.id = id;
     }
 
-//    public User getAuthor() {
-//        return author;
-//    }
-
-    public String getAuthor() {return author;}
-
-//    public void setAuthor(User author) {
-//        this.author = author;
-//    }
-    public void setAuthor(String author) {
-        this.author = author;
+    public long getAuthorId() {
+        return authorId;
     }
+
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
+    }
+
 
     public String getName() {
         return name;
@@ -65,14 +68,6 @@ public class Project {
         this.photoUrl = photoUrl;
     }
 
-//    public List<String> getKeywords() {
-//        return keywords;
-//    }
-
-//    public void setKeywords(List<String> keywords) {
-//        this.keywords = keywords;
-//    }
-
     public String getCategory() {
         return category;
     }
@@ -97,22 +92,35 @@ public class Project {
         this.status = status;
     }
 
-//    public List<User> getApplyingUsers() {
-//        return applyingUsers;
-//    }
-//
-//    public void setApplyingUsers(List<User> applyingUsers) {
-//        this.applyingUsers = applyingUsers;
-//    }
-//
-//    public List<User> getApprovedUsers() {
-//        return approvedUsers;
-//    }
-//
-//    public void setApprovedUsers(List<User> approvedUsers) {
-//        this.approvedUsers = approvedUsers;
-//    }
+    public List<User> getApplyingUsers() {
+        return applyingUsers;
+    }
 
+    public void setApplyingUsers(List<User> applyingUsers) {
+        this.applyingUsers = applyingUsers;
+    }
 
+    public List<User> getApprovedUsers() {
+        return approvedUsers;
+    }
 
+    public void setApprovedUsers(List<User> approvedUsers) {
+        this.approvedUsers = approvedUsers;
+    }
+
+    public Timestamp getStartDate() {
+        return new Timestamp(startDate.getMillis());
+    }
+
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = new DateTime(startDate);
+    }
+
+    public Timestamp getEndDate() {
+        return endDate == null ? null : new Timestamp(endDate.getMillis());
+    }
+
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = new DateTime(endDate);
+    }
 }
