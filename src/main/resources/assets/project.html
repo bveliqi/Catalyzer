@@ -276,13 +276,15 @@ function prepareEditableObj(obj, field) {
     }
     projectData[field] = newValue;
     $("div.saving").css('display', 'inline');
+    var data = {};
+    data[field] = $(obj).val();
     $.ajax({
       type: "POST",
       url: projectUrl + "/" + field,
-      data: { field: $(obj).val() },
+      data: data,
     }).done(function() {
         $("div.saving").css('dislay', 'none');
-      } );
+      });
     listeners[field]();
   });
 }

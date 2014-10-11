@@ -203,10 +203,12 @@ function prepareEditableObj(obj, field) {
     }
     projectData[field] = newValue;
     $("div.saving").css('display', 'inline');
+    var data = {};
+    data[field] = $(obj).val();
     $.ajax({
       type: "POST",
       url: projectUrl + "/" + field,
-      data: { field: $(obj).val() },
+      data: data,
     }).done(function() {
         $("div.saving").css('dislay', 'none');
       } );
@@ -243,7 +245,7 @@ function displayProjectData(data) {
 
   var editable = true;  // TODO: This should come from the server.
 
-  $(".catalyzer-project-total-points").text(totalPoints);
+  $(".catalyzer-user-total-points").text(totalPoints);
   prepareEditableObjs(".catalyzer-user-name", "name");
   prepareEditableObjs(".catalyzer-user-subtitle", "subtitle");
 }
