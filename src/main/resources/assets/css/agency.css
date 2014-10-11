@@ -286,8 +286,11 @@ fieldset[disabled] .btn-xl.active {
 .about-user textarea, header textarea, h4 textarea {
   background-color: transparent;
   vertical-align:middle;
-  text-align:center;
   border: none;
+}
+
+textarea .centered {
+  text-align:center;
 }
 
 header {
