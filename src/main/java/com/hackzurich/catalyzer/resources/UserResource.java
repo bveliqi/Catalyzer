@@ -1,10 +1,13 @@
 package com.hackzurich.catalyzer.resources;
 
+import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.jdbi.UserDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -23,27 +26,27 @@ public class UserResource {
 
     @GET
     @Path("/{id}")
+    @Timed
     public User getById(@PathParam("id") long id) {
-        return userDao.getById(id);
+        final User user = userDao.getById(id);
+        if(user == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return user;
     }
 
 
     @GET
+    @Timed
     public List<User> getAll(@QueryParam("from") int from, @QueryParam("to") int to) {
         return userDao.getAll(from, to > 0 ? to : 10);
     }
 
     @POST
-    @Path("/new")
-    public long insert() {
-        User user = new User();
-        user.setName("Behar Veliqi");
-        user.setEmail("behar@veliqi.de");
-        user.setEmailConfirmed(false);
-        user.setAvatar(0);
-        user.setPassword("klfrhekfhkshfkjd");
+    @Timed
+    public Response insert(User user) {
         long id = userDao.insert(user);
-        return id;
+        return Response.created(URI.create("/user/" + String.valueOf(id))).build();
     }
 
 

@@ -16,10 +16,10 @@ public interface ProjectDao {
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO PROJECTS " +
             "(authorId, name, motivation, photoUrl, category, pointsThreshold, " +
-            "status, startDate, endDate)" +
+            "status, startDate, endDate, longitude, latitude, points)" +
             " values " +
             "(:authorId, :name, :motivation, :photoUrl, :category, :pointsThreshold, " +
-            ":status, :startDate, :endDate)")
+            ":status, :startDate, :endDate, :longitude, :latitude, :points)")
     long insert(@BindBean Project project);
 
 
@@ -46,5 +46,9 @@ public interface ProjectDao {
             " WHERE up.projectId = :id AND up.state = 'APPLYING' " +
             " AND p.id = up.projectId AND u.id = up.userId")
     List<User> getAllAppliedUsers(@Bind("id") long id);
+
+
+    @SqlUpdate("UPDATE PROJECTS SET points = points + :morePoints WHERE id = :id")
+    void upvote(@Bind("id") long id, @Bind("morePoints") int morePoints);
 
 }

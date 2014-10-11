@@ -46,7 +46,7 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
         final ProjectDao projectDao = jdbi.onDemand(ProjectDao.class);
         final UserDao userDao = jdbi.onDemand(UserDao.class);
 
-        environment.jersey().register(new ProjectResource(projectDao, userDao));
+        environment.jersey().register(new ProjectResource(projectDao));
         environment.jersey().register(new UserResource(userDao));
 
     }
