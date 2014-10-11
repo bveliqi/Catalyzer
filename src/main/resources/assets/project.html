@@ -105,6 +105,7 @@
                                 </div>
                                 <div class="timeline-body">
                                     <p class="text-muted catalyzer-project-motivation">...</p>
+                                    <textarea class="cataylzer-project-motivation">...</textarea>
                                 </div>
                             </div>
                         </li>
@@ -130,43 +131,7 @@
                     </h3>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="img/avatar5.jpg"
-                             class="img-responsive img-circle"
-                             alt="Making the world a better place!">
-                        <h4>Stephanie Stroka</h4>
-                        <p class="text-muted">Creator</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="img/avatar3.jpg"
-                             class="img-responsive img-circle"
-                             alt="">
-                        <h4>Julia Martyncuk</h4>
-                        <p class="text-muted">Contributor: (no message)</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="img/avatar2.jpg"
-                             class="img-responsive img-circle"
-                             alt="I love hiking!">
-                        <h4>Ralf Wildenhues</h4>
-                        <p class="text-muted">Contributor: <i>I'll bring some beers.</i></p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="team-member">
-                        <img src="img/avatar1.jpg"
-                             class="img-responsive img-circle"
-                             alt="Ciao bambino!">
-                        <h4>Silvio Valenti</h4>
-                        <p class="text-muted">Contributor: <i>Ciao! Bellisima idea!  I'm in!</i></p>
-                    </div>
-                </div>
+            <div class="row" id="catalyzer-project-participants">
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -222,27 +187,77 @@
     <script src="js/jquery-1.11.0.js"></script>
 
 <script type="text/javascript">
-// This assumes that the last component in the URL is the ID of the project, and
-// then loads it from /projects/ID.
 var parts = document.URL.split("/");
 var url = parts[0] + "//" + parts[1] + "/projects/"
-    + parts[parts.length - 1].split("#")[0];
+    + parts[parts.length - 1].split("#")[1];
 
 $(document).ready(function() {
   console.log("Loading data from URL: " + url);
-  var fakeData = [
-      "Cleaning up the Sihl",
-      "file:///home/alejo/catalyzer-local/src/main/resources/assets/img/garbage_picking.jpg",
-      "<p>Some parts of the Sihl river --close to Tuefi-- have become "
-      + "relatively poluted.  We will gather there on a Saturday and spend a "
-      + "few hours just collecting garbage.  Since the Tuefi closes at 12, "
-      + "we'll start early.</p>"
-      + "<p>Then, depending on the weather, "
-      + "we will drink some beers and cook some sausages.</p>"
-      + "<p>Join us and help us keep our river beautiful.</p>",
-      "Stephanie Stroka",
-      "Environment",
-      ];
+  var fakeData = {
+    "applyingUsers": [
+        {
+            "avatar": 5,
+            "email": null,
+            "emailConfirmed": false,
+            "id": 1,
+            "name": "Stephanie Stroka",
+            "password": null,
+            "points": 0,
+            "totalPoints": 0,
+            "comment": 0,
+        },
+        {
+            "avatar": 1,
+            "email": null,
+            "emailConfirmed": false,
+            "id": 1,
+            "name": "Silvio Valenti",
+            "password": null,
+            "points": 0,
+            "totalPoints": 0,
+            "comment": "Ciao! Bellisima idea!  I'm in!",
+        },
+        {
+            "avatar": 3,
+            "email": null,
+            "emailConfirmed": false,
+            "id": 1,
+            "name": "Julia Martynczuk",
+            "password": null,
+            "points": 0,
+            "totalPoints": 0,
+            "comment": "Good idea.",
+        },
+        {
+            "avatar": 2,
+            "email": null,
+            "emailConfirmed": false,
+            "id": 1,
+            "name": "Ralf Wildenhues",
+            "password": null,
+            "points": 0,
+            "totalPoints": 0,
+            "comment": "I'll bring the beers!",
+        },
+    ],
+    "authorId": 13,
+    "category": "Environment",
+    "endDate": 1413031461905,
+    "id": 14,
+    "motivation":
+        "<p>Some parts of the Sihl river --close to Tuefi-- have become "
+        + "relatively poluted.  We will gather there on a Saturday and spend a "
+        + "few hours just collecting garbage.  Since the Tuefi closes at 12, "
+        + "we'll start early.</p>"
+        + "<p>Then, depending on the weather, "
+        + "we will drink some beers and cook some sausages.</p>"
+        + "<p>Join us and help us keep our river beautiful.</p>",
+    "name": "Cleaning up the Sihl",
+    "photoUrl": "file:///home/alejo/catalyzer-local/src/main/resources/assets/img/garbage_picking.jpg",
+    "pointsThreshold": 30,
+    "startDate": 1413030319000,
+    "status": "OK"
+  }
 
   setTimeout(
       function() { displayProjectData(fakeData); },
@@ -255,18 +270,31 @@ $(document).ready(function() {
 
 function displayProjectData(data) {
   if (console && console.log) {
-    console.log("Sample of data:", data.slice(0, 100));
+    console.log("Sample of data:", data);
   }
-  var projectName = data[0];
-  var imageUrl = data[1];
-  var motivation = data[2];
-  var author = data[3];
-  var category = data[4];
+  var projectName = data["name"];
+  var imageUrl = data["photoUrl"];
+  var motivation = data["motivation"];
+  var author = data["authorId"];
+  var category = data["category"];
+
+  var editable = true;  // TODO: This should come from the server.
   $(".catalyzer-project-name").text(projectName);
   $("header").css('background-image', "url(" + imageUrl + ")");
-  $(".catalyzer-project-motivation").html(motivation);
+  $(".catalyzer-project-motivation").val(motivation);
   $(".catalyzer-project-author").text(author);
   $(".catalyzer-project-category").text(category);
+  var usersContainer = $("#catalyzer-project-participants");
+  for (var i = 0; i < data["applyingUsers"].length; i++) {
+    var user = data["applyingUsers"][i];
+    usersContainer.append(
+      $("<div class='col-sm-4'><div class='team-member'>"
+        + "<img src='img/avatar" + user["avatar"] + ".jpg' "
+        + " class='img-responsive img-circle' alt='Avatar!'>"
+        + "<h4>" + user["name"] + "</h4>"
+        + "<p class='text-muted'>" + user["comment"] + "</p>"
+        + "</div></div>"));
+  }
 }
 </script>
 
