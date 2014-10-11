@@ -980,3 +980,7 @@ body {
 .notify-fail {
 	color: #c30008;
 }
+
+.gap {
+	margin-bottom: 40px;
+}
