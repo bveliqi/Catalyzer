@@ -204,7 +204,7 @@ $(document).ready(function() {
             "password": null,
             "points": 0,
             "totalPoints": 0,
-            "comment": 0,
+            "comment": 0
         },
         {
             "avatar": 1,
@@ -215,7 +215,7 @@ $(document).ready(function() {
             "password": null,
             "points": 0,
             "totalPoints": 0,
-            "comment": "Ciao! Bellisima idea!  I'm in!",
+            "comment": "Ciao! Bellisima idea!  I'm in!"
         },
         {
             "avatar": 3,
@@ -226,7 +226,7 @@ $(document).ready(function() {
             "password": null,
             "points": 0,
             "totalPoints": 0,
-            "comment": "Good idea.",
+            "comment": "Good idea."
         },
         {
             "avatar": 2,
@@ -237,8 +237,8 @@ $(document).ready(function() {
             "password": null,
             "points": 0,
             "totalPoints": 0,
-            "comment": "I'll bring the beers!",
-        },
+            "comment": "I'll bring the beers!"
+        }
     ],
     "authorId": 13,
     "category": "Environment",
@@ -263,7 +263,7 @@ $(document).ready(function() {
     displayProjectData(fakeData);
   } else {
     $.ajax({
-      url: projectUrl,
+      url: projectUrl
     }).done(displayProjectData);
   }
 });
@@ -275,17 +275,19 @@ function prepareEditableObj(obj, field) {
       return;
     }
     projectData[field] = newValue;
-    $("div.saving").css('display', 'inline');
+    $("div.saving").show();
     var data = {};
     data[field] = $(obj).val();
     $.ajax({
       type: "POST",
       url: projectUrl + "/" + field,
-      data: data,
-    }).done(function() {
-        $("div.saving").css('dislay', 'none');
-      });
-    listeners[field]();
+      data: data
+    }).done(function()  {
+        $("div.saving").hide();
+    }).fail(function()  {
+        alert("Sorry. Unable to update.");
+    });
+      listeners[field]();
   });
 }
 
