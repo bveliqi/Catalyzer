@@ -16,10 +16,10 @@ public interface ProjectDao {
     @GetGeneratedKeys
     @SqlUpdate("INSERT INTO PROJECTS " +
             "(authorId, name, motivation, photoUrl, category, pointsThreshold, " +
-            "status, startDate, endDate)" +
+            "status, startDate, endDate, longitude, latitude, points)" +
             " values " +
             "(:authorId, :name, :motivation, :photoUrl, :category, :pointsThreshold, " +
-            ":status, :startDate, :endDate)")
+            ":status, :startDate, :endDate, :longitude, :latitude, :points)")
     long insert(@BindBean Project project);
 
 
@@ -31,6 +31,10 @@ public interface ProjectDao {
     @MapResultAsBean
     @SqlQuery("select * from PROJECTS LIMIT :from, :number")
     List<Project> getAll(@Bind("from") int from, @Bind("number") int number);
+
+    @MapResultAsBean
+    @SqlQuery("select * from PROJECTS ORDER BY points DESC LIMIT :from, :number")
+    List<Project> getTopProjects(@Bind("from") int from, @Bind("number") int number);
 
     @MapResultAsBean
     @SqlQuery("SELECT u.id, u.name" +
@@ -46,5 +50,20 @@ public interface ProjectDao {
             " WHERE up.projectId = :id AND up.state = 'APPLYING' " +
             " AND p.id = up.projectId AND u.id = up.userId")
     List<User> getAllAppliedUsers(@Bind("id") long id);
+
+
+    @SqlUpdate("UPDATE PROJECTS SET points = points + :morePoints WHERE id = :id")
+    void upvote(@Bind("id") long id, @Bind("morePoints") int morePoints);
+
+
+
+    @SqlUpdate("UPDATE PROJECTS SET name = :name WHERE id = :id")
+    void updateName(@Bind("id") long id, @Bind("name") String name);
+
+
+    @SqlUpdate("UPDATE PROJECTS SET motivation = :motivation WHERE id = :id")
+    void updateMotivation(@Bind("id") long id, @Bind("motivation") String motivation);
+
+
 
 }

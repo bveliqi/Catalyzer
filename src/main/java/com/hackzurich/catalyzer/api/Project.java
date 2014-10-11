@@ -24,6 +24,9 @@ public class Project {
     private List<User> approvedUsers;
     private DateTime startDate;
     private DateTime endDate;
+    private long latitude;
+    private long longitude;
+    private int points;
 
 
     public long getId() {
@@ -124,4 +127,59 @@ public class Project {
     }
 
 
+    public long getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
+    }
+
+    public long getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        if (authorId != project.authorId) return false;
+        if (id != project.id) return false;
+        if (pointsThreshold != project.pointsThreshold) return false;
+        if (!category.equals(project.category)) return false;
+        if (!motivation.equals(project.motivation)) return false;
+        if (!name.equals(project.name)) return false;
+        if (!photoUrl.equals(project.photoUrl)) return false;
+        if (!status.equals(project.status)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (authorId ^ (authorId >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + motivation.hashCode();
+        result = 31 * result + photoUrl.hashCode();
+        result = 31 * result + category.hashCode();
+        result = 31 * result + pointsThreshold;
+        result = 31 * result + status.hashCode();
+        return result;
+    }
 }
