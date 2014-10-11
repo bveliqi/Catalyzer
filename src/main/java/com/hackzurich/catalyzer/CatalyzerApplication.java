@@ -16,6 +16,7 @@ import io.dropwizard.setup.Environment;
 import org.skife.jdbi.v2.DBI;
 
 import java.net.UnknownHostException;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -39,7 +40,7 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
 
     @Override
     public void run(CatalyzerConfiguration configuration,
-                    Environment environment) throws ClassNotFoundException, UnknownHostException {
+                    Environment environment) throws ClassNotFoundException, UnknownHostException, NoSuchAlgorithmException {
 
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
