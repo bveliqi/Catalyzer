@@ -19,15 +19,33 @@ $(function() {
 		element.find(".supportProject").show();
 	}
 	
+	function compare(a, b) {
+		var percentA = Math.floor(100 * (a.points / a.pointsThreshold));
+		var percentB = Math.floor(100 * (b.points / b.pointsThreshold));
+		
+		console.log("comparing " + percentA + " and " + percentB);
+		if (percentA < percentB)
+		    return 1;
+		if (percentA > percentB)
+		    return -1;
+		return 0;
+	}
+	
 	function loadProjects() {
 		$.get("/project/", function(data) {
 			
 			$(".projects").empty();
 			
+			data.sort(compare);
+			
 			$.each(data, function(index, project) {
 				
 				console.log("Adding project " + project.name);
 				var percent = Math.floor(100 * (project.points / project.pointsThreshold));
+				
+				if (percent > 100) {
+					percent = 100;
+				}
 				
 				var startDate = project.startDate;
 				console.log("Start date: " + startDate + " => " + new Date(startDate));
@@ -60,7 +78,7 @@ $(function() {
 		'			</div>' +
 		'		</div>' +
 		'		<div class="col-md-2">' +
-		'			<h4 class="projects-supporters">Supporters</h4>' +
+		'			<h4 class="projects-supporters">Participants</h4>' +
 		'			<div class="row">' +
 		'				<div class="col-md-1">' +
 		'					<img class="supporters-img" src="img/avatar1.jpg" />' +
@@ -94,6 +112,9 @@ $(function() {
 						'	<img class="supporters-img" src="img/avatar9.jpg" />' +
 						'</div>' +
 					'</div>' +
+		'			<div class="row">' +
+						'<button class="btn btn-primary" style="margin-left: 20px;">Participate</button>' +
+					'</div>' +
 				'</div>' +
 			'</div>' +
 			'<div class="modal" id="votingModal' + project.id + '">' +
@@ -124,7 +145,6 @@ $(function() {
 			'</div>';
 			
 			$(".projects").append(html);
-			
 			});
 		});
 	}
