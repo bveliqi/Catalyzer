@@ -33,6 +33,10 @@ public interface ProjectDao {
     List<Project> getAll(@Bind("from") int from, @Bind("number") int number);
 
     @MapResultAsBean
+    @SqlQuery("select * from PROJECTS ORDER BY points DESC LIMIT :from, :number")
+    List<Project> getTopProjects(@Bind("from") int from, @Bind("number") int number);
+
+    @MapResultAsBean
     @SqlQuery("SELECT u.id, u.name" +
             " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
             " WHERE up.projectId = :id AND up.state = 'ACCEPTED' " +

@@ -46,7 +46,7 @@ public class UserResource {
     @Timed
     public Response insert(User user) {
         long id = userDao.insert(user);
-        return Response.created(URI.create("/user/" + String.valueOf(id))).build();
+        return Response.created(URI.create(String.valueOf(id))).build();
     }
 
 

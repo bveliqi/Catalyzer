@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * Created by behar on 11.10.14.
+ * Created by behar on 11.10.14
  */
 @Path("project")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,6 +30,12 @@ public class ProjectResource {
         return projectDao.getAll(from, to > 0 ? to : 10);
     }
 
+    @GET
+    @Timed
+    @Path("top")
+    public List<Project> getTopProjects(@QueryParam("from") int from, @QueryParam("to") int to) {
+        return projectDao.getTopProjects(from, to > 0 ? to : 10);
+    }
 
     @GET
     @Path("{id}")
@@ -51,7 +57,7 @@ public class ProjectResource {
     @Timed
     public Response insert(Project project) {
         long id = projectDao.insert(project);
-        return Response.created(URI.create("/projects/" + String.valueOf(id))).build();
+        return Response.created(URI.create(String.valueOf(id))).build();
     }
 
     @POST
