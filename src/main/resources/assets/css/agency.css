@@ -261,11 +261,14 @@ fieldset[disabled] .btn-xl.active {
     }
 }
 
+.index-header {
+    background-image: url(../img/charity_water.jpg);
+}
+
 header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
-    background-image: url(../img/charity_water.jpg);
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
