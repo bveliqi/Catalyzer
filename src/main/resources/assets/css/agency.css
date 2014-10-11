@@ -860,3 +860,18 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: #fed136;
 }
+
+.container {
+	width: 100%;
+}
+
+.project-img {
+	position: relative;
+	width: 100%;
+}
+
+.supporters-img {
+	position: relative;
+	width: 30px;
+	margin: 5px;
+}
