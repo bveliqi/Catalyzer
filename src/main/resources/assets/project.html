@@ -259,7 +259,7 @@ $(document).ready(function() {
     "status": "OK"
   }
 
-  if (outerParts[1] == "alejo") {
+  if (window.location.hash === "#alejo") {
     displayProjectData(fakeData);
   } else {
     $.ajax({
