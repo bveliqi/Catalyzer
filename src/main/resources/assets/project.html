@@ -35,6 +35,8 @@
 
 <body id="page-top" class="index">
 
+    <div class="saving" style="display: none"><div class="container">Saving...</div></div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -188,10 +190,10 @@
 <script type="text/javascript">
 var outerParts = document.URL.split("#");
 var parts = outerParts[0].split("/");
-var url = parts[0] + "//" + parts[1] + "/projects/" + outerParts[1];
+var projectUrl = parts[0] + "//" + parts[1] + "/projects/" + outerParts[1];
 
 $(document).ready(function() {
-  console.log("Loading data from URL: " + url);
+  console.log("Loading data from URL: " + projectUrl);
   var fakeData = {
     "applyingUsers": [
         {
@@ -262,7 +264,7 @@ $(document).ready(function() {
     displayProjectData(fakeData);
   } else {
     $.ajax({
-      url: url,
+      url: projectUrl,
     }).done(displayProjectData);
   }
 });
@@ -274,12 +276,14 @@ function prepareEditableObj(obj, field) {
       return;
     }
     projectData[field] = newValue;
-    alert("Saving: " + newValue);
+    $("div.saving").css('display', 'inline');
     $.ajax({
       type: "POST",
-      url: url,
+      url: projectUrl + "/" + field,
       data: { field: $(obj).val() },
-    });
+    }).done(function() {
+        $("div.saving").css('dislay', 'none');
+      } );
     listeners[field]();
   });
 }
@@ -312,7 +316,6 @@ function displayProjectData(data) {
   var category = data["category"];
 
   var editable = true;  // TODO: This should come from the server.
-
 
   $("header").css('background-image', "url(" + imageUrl + ")");
   prepareEditableObjs(".catalyzer-project-name", "name");

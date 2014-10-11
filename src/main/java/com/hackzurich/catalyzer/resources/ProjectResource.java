@@ -72,9 +72,9 @@ public class ProjectResource {
 
 
     @POST
-    @Path("{id}/name/{name}")
+    @Path("{id}/name")
     @Timed
-    public void updateName(@PathParam("id") long id, @PathParam("name") String name) {
+    public void updateName(@PathParam("id") long id, @FormParam("name") String name) {
         if(projectDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
