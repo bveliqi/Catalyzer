@@ -12,7 +12,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Project {
 
-
     private long id;
     private long authorId;
     private String name;
@@ -123,4 +122,6 @@ public class Project {
     public void setEndDate(Timestamp endDate) {
         this.endDate = new DateTime(endDate);
     }
+
+
 }

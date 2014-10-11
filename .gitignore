@@ -106,3 +106,5 @@ hs_err_pid*
 *.log
 .classpath
 .project
+
+src/main/resources/com/hackzurich/catalyzer/config.yml

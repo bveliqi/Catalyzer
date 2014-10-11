@@ -14,20 +14,13 @@ public interface ProjectDao {
 
 
     @GetGeneratedKeys
-    @SqlUpdate("insert into PROJECTS " +
-            "(authorId, name, motivation, photoUrl, category, pointsThreshold, status)" +
-            " values " +
-            "(:authorId, :name, :motivation, :photoUrl, :category, :pointsThreshold, :status)")
-    long insert(@BindBean Project project);
-
-    @GetGeneratedKeys
-    @SqlUpdate("insert into PROJECTS " +
+    @SqlUpdate("INSERT INTO PROJECTS " +
             "(authorId, name, motivation, photoUrl, category, pointsThreshold, " +
             "status, startDate, endDate)" +
             " values " +
-            "(:u.id, :p.name, :p.motivation, :p.photoUrl, :p.category, :p.pointsThreshold, " +
-            ":p.status, :p.startDate, :p.endDate)")
-    long insert(@BindBean("p") Project project, @BindBean("u") User user);
+            "(:authorId, :name, :motivation, :photoUrl, :category, :pointsThreshold, " +
+            ":status, :startDate, :endDate)")
+    long insert(@BindBean Project project);
 
 
     @MapResultAsBean

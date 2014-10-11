@@ -1,0 +1,79 @@
+    [
+        {
+            "authorId": 13, 
+            "category": "Whatever", 
+            "endDate": 1413031100763, 
+            "id": 14, 
+            "motivation": "Helping ppl", 
+            "name": "Helping ppl in neighbourhood", 
+            "photoUrl": "/a/b/c.jpg", 
+            "pointsThreshold": 30, 
+            "startDate": 1413030319000, 
+            "status": "OK"
+        }, 
+        {
+            "authorId": 13, 
+            "category": "Whatever", 
+            "endDate": 1413031100764, 
+            "id": 15, 
+            "motivation": "Helping ppl", 
+            "name": "Helping ppl in neighbourhood", 
+            "photoUrl": "/a/b/c.jpg", 
+            "pointsThreshold": 30, 
+            "startDate": 1413030756000, 
+            "status": "OK"
+        }
+    ]
+
+
+
+
+
+
+
+
+http GET http://localhost:8080/project/14
+HTTP/1.1 200 OK
+Content-Encoding: gzip
+Content-Type: application/json
+Date: Sat, 11 Oct 2014 12:44:21 GMT
+Transfer-Encoding: chunked
+Vary: Accept-Encoding
+
+{
+    "applyingUsers": [
+        {
+            "avatar": 0, 
+            "email": null, 
+            "emailConfirmed": false, 
+            "id": 13, 
+            "name": "Behar Veliqi", 
+            "password": null, 
+            "points": 0, 
+            "totalPoints": 0
+        }
+    ], 
+    "approvedUsers": [
+        {
+            "avatar": 0, 
+            "email": null, 
+            "emailConfirmed": false, 
+            "id": 13, 
+            "name": "Behar Veliqi", 
+            "password": null, 
+            "points": 0, 
+            "totalPoints": 0
+        }
+    ], 
+    "authorId": 13, 
+    "category": "Whatever", 
+    "endDate": 1413031461905, 
+    "id": 14, 
+    "motivation": "Helping ppl", 
+    "name": "Helping ppl in neighbourhood", 
+    "photoUrl": "/a/b/c.jpg", 
+    "pointsThreshold": 30, 
+    "startDate": 1413030319000, 
+    "status": "OK"
+}
+
