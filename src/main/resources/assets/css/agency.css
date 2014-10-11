@@ -177,6 +177,7 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .navbar-brand {
     font-family: "Kaushan Script","Helvetica Neue",Helvetica,Arial,cursive;
     color: #fed136;
+    text-shadow: 2px 2px 8px #000;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -261,11 +262,14 @@ fieldset[disabled] .btn-xl.active {
     }
 }
 
+.index-header {
+    background-image: url(../img/charity_water.jpg);
+}
+
 header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
-    background-image: url(../img/charity_water.jpg);
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;
@@ -285,6 +289,7 @@ header .intro-text .intro-lead-in {
     font-size: 22px;
     font-style: italic;
     line-height: 22px;
+    text-shadow: 2px 2px 8px #000;
 }
 
 header .intro-text .intro-heading {
@@ -874,4 +879,77 @@ body {
 	position: relative;
 	width: 30px;
 	margin: 5px;
+}
+
+.progress-bar-container {
+	position: absolute; 
+	bottom: 0; 
+	height: 80px; 
+	background-color: rgba(255,255,255,0.5); 
+	width: 100%; 
+	margin-left: -15px;
+}
+
+.progress-bar {
+	position: relative; 
+	margin-left: 10%; 
+	margin-top: 20px;
+    background-color: #fee9a1;
+    border: 1px solid #555; 
+	width: 70%; 
+	height: 35px;
+}
+
+.progress-bar-progress {
+	position: absolute; 
+	left: 0; 
+	background-color: #fed136; 
+	width: 70%;
+	height: 100%
+}
+
+.progress-indicator {
+	position: absolute; 
+	left: 50%; 
+	margin-left: -10px; 
+	bottom: 0; 
+	font-weigth: 700; 
+	color: #000; 
+	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif; 
+	text-shadow: 2px 2px 8px #fff; 
+	font-size: 20px;
+}
+
+.btn-vote {
+	margin-top: 20px; 
+	margin-left: 5px; 
+	border: 1px solid #555;
+}
+
+.btn-vote-modal {
+	border: 1px #555 solid;
+}
+
+.note {
+	color: #e1b109;
+}
+
+.centered {
+	text-align: center;
+}
+
+.no-padding-left {
+	padding-left: 0;	
+}
+
+.large-input {
+	height: 40px;
+}
+
+.notify-success {
+	color: #137309;
+}
+
+.notify-fail {
+	color: #c30008;
 }
