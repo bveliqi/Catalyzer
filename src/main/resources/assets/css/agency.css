@@ -279,7 +279,11 @@ fieldset[disabled] .btn-xl.active {
     background-image: url(../img/charity_water.jpg);
 }
 
-header textarea, h4 textarea {
+.user-header {
+    background-image: url(../img/header-bg.jpg);
+}
+
+.about-user textarea, header textarea, h4 textarea {
   background-color: transparent;
   vertical-align:middle;
   text-align:center;

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Catalyzer - Clean up the Limmat</title>
+    <title>Catalyzer - User Profile</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <p class="navbar-brand page-scroll catalyzer-project-name">... loading ...</p>
+                <p class="navbar-brand page-scroll catalyzer-user-name">... loading ...</p>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -58,13 +58,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#motivation">Motivation</a>
+                        <a class="page-scroll" href="#about">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#participants">Participants</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#comments">Comments</a>
+                        <a class="page-scroll" href="#projects">Projects</a>
                     </li>
                 </ul>
             </div>
@@ -74,23 +71,23 @@
     </nav>
 
     <!-- Header -->
-    <header class="project-header">
+    <header class="user-header">
         <div class="container">
             <div class="intro-text">
-                <div class="intro-lead-in">Project:</div>
-                <div class="intro-heading"><textarea class="catalyzer-project-name">... loading ...</textarea></div>
-                <a href="#services" class="page-scroll btn btn-xl">Participate!</a>
+                <div class="intro-lead-in">Catalyzer user</div>
+                <div class="intro-heading"><textarea class="catalyzer-user-name">... loading ...</textarea></div>
+                <a href="#services" class="page-scroll btn btn-xl">Projects</a>
             </div>
         </div>
     </header>
 
-    <!-- Motivation Section -->
-    <section id="motivation">
+    <!-- About Section -->
+    <section id="about" class="about-user">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Motivation</h2>
-                    <h3 class="section-subheading text-muted">A project by: <span class="catalyzer-project-author">...</span></h3>
+                    <h2 class="section-heading"><textarea class="catalyzer-user-name">... loading ...</textarea></h2>
+                    <h3 class="section-subheading text-muted"><textarea class="catalyzer-user-subtitle">...</textarea></h3>
                 </div>
             </div>
             <div class="row">
@@ -102,11 +99,10 @@
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>Project: <textarea class="catalyzer-project-name">...</textarea></h4>
-                                    <h4 class="subheading catalyzer-project-category"></h4>
+                                    <h4>Points: <span class="catalyzer-user-total-points">...</span></h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <textarea style="border: 0px; overflow:visible; width: 100%;" class="catalyzer-project-motivation">...</textarea>
+                                    <textarea style="border: 0px; overflow:visible; width: 100%;" class="catalyzer-user-motivation">...</textarea>
                                 </div>
                             </div>
                         </li>
@@ -195,69 +191,15 @@ var projectUrl = parts[0] + "//" + parts[1] + "/projects/" + outerParts[1];
 $(document).ready(function() {
   console.log("Loading data from URL: " + projectUrl);
   var fakeData = {
-    "applyingUsers": [
-        {
-            "avatar": 5,
-            "email": null,
-            "emailConfirmed": false,
-            "id": 1,
-            "name": "Stephanie Stroka",
-            "password": null,
-            "points": 0,
-            "totalPoints": 0,
-            "comment": 0,
-        },
-        {
-            "avatar": 1,
-            "email": null,
-            "emailConfirmed": false,
-            "id": 1,
-            "name": "Silvio Valenti",
-            "password": null,
-            "points": 0,
-            "totalPoints": 0,
-            "comment": "Ciao! Bellisima idea!  I'm in!",
-        },
-        {
-            "avatar": 3,
-            "email": null,
-            "emailConfirmed": false,
-            "id": 1,
-            "name": "Julia Martynczuk",
-            "password": null,
-            "points": 0,
-            "totalPoints": 0,
-            "comment": "Good idea.",
-        },
-        {
-            "avatar": 2,
-            "email": null,
-            "emailConfirmed": false,
-            "id": 1,
-            "name": "Ralf Wildenhues",
-            "password": null,
-            "points": 0,
-            "totalPoints": 0,
-            "comment": "I'll bring the beers!",
-        },
-    ],
-    "authorId": 13,
-    "category": "Environment",
-    "endDate": 1413031461905,
-    "id": 14,
-    "motivation":
-        "Some parts of the Sihl river --close to Tuefi-- have become "
-        + "relatively poluted.  We will gather there on a Saturday and spend a "
-        + "few hours just collecting garbage.  Since the Tuefi closes at 12, "
-        + "we'll start early.\n\n"
-        + "Then, depending on the weather, "
-        + "we will drink some beers and cook some sausages.\n\n"
-        + "Join us and help us keep our river beautiful.",
-    "name": "Cleaning up the Sihl",
-    "photoUrl": "file:///home/alejo/catalyzer-local/src/main/resources/assets/img/garbage_picking.jpg",
-    "pointsThreshold": 30,
-    "startDate": 1413030319000,
-    "status": "OK"
+    "name": "Silvio Valenti",
+    "email": "silvius82@gmail.com",
+    "password": "hahahah",
+    "emailConfirmed": 1,
+    "points": 10,
+    "totalPoints": 1021,
+    "avatar": 3,
+
+    "subtitle": "I'm loving it!",
   }
 
   if (outerParts[1] == "alejo") {
@@ -291,8 +233,8 @@ function prepareEditableObj(obj, field) {
 function prepareEditableObjs(selector, fieldName) {
   var objs = $(selector);
   listeners[fieldName] = function() {
-    objs.text(projectData[fieldName]);
-    objs.val(projectData[fieldName]);
+    objs.text(userData[fieldName]);
+    objs.val(userData[fieldName]);
     for (var i = 0; i < objs.length; i++) {
       $(objs[i]).height(objs[i].scrollHeight);
     }
@@ -303,37 +245,23 @@ function prepareEditableObjs(selector, fieldName) {
   listeners[fieldName]();
 }
 
-var projectData;
+var userData;
 // Functions to call when a given field changes.
 var listeners = {};
 
 function displayProjectData(data) {
-  projectData = data;
-  var projectName = data["name"];
-  var imageUrl = data["photoUrl"];
-  var motivation = data["motivation"];
-  var author = data["authorId"];
-  var category = data["category"];
+  userData = data;
+  var userName = data["name"];
+  var email = data["email"];
+  var emailConfirmed = data["emailConfirmed"];
+  var points = data["points"];
+  var totalPoints = data["totalPoints"];
 
   var editable = true;  // TODO: This should come from the server.
 
-  $("header").css('background-image', "url(" + imageUrl + ")");
-  prepareEditableObjs(".catalyzer-project-name", "name");
-  prepareEditableObjs(".catalyzer-project-motivation", "motivation");
-
-  $(".catalyzer-project-author").text(author);
-  $(".catalyzer-project-category").text(category);
-  var usersContainer = $("#catalyzer-project-participants");
-  for (var i = 0; i < data["applyingUsers"].length; i++) {
-    var user = data["applyingUsers"][i];
-    usersContainer.append(
-      $("<div class='col-sm-4'><div class='team-member'>"
-        + "<img src='img/avatar" + user["avatar"] + ".jpg' "
-        + " class='img-responsive img-circle' alt='Avatar!'>"
-        + "<h4>" + user["name"] + "</h4>"
-        + "<p class='text-muted'>" + user["comment"] + "</p>"
-        + "</div></div>"));
-  }
+  $(".catalyzer-project-total-points").text(totalPoints);
+  prepareEditableObjs(".catalyzer-user-name", "name");
+  prepareEditableObjs(".catalyzer-user-subtitle", "subtitle");
 }
 </script>
 
