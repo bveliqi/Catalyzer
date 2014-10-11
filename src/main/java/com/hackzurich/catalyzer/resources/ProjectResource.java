@@ -2,23 +2,18 @@ package com.hackzurich.catalyzer.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Project;
-import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import java.util.List;
 
 /**
  * Created by behar on 11.10.14.
  */
-@Path("/")
+@Path("/project")
 @Produces(MediaType.APPLICATION_JSON)
 public class ProjectResource {
-
 
     private final ProjectDao projectDao;
 
@@ -28,17 +23,32 @@ public class ProjectResource {
 
     @GET
     @Timed
+    @Path("hello")
     public String helloWord() {
         return "Hello World!";
+    }
+
+
+    @GET
+    @Path("{id}")
+    public Project getById(@PathParam("id") long id) {
+        return projectDao.getById(id);
+    }
+
+    @GET
+    public List<Project> getAll(@QueryParam("from") int from, @QueryParam("to") int to) {
+        return projectDao.getAll(from, to > 0 ? to : 10);
     }
 
     @POST
     @Path("/new")
     public long insert() {
         Project project = new Project();
-        final User author = new User();
-        project.setAuthor(author);
-        author.setName("Helping ppl in neighbourhood");
+//        final User author = new User();
+//        author.setName("Behar Veliqi");
+//        project.setAuthor(author);
+        project.setAuthor("Behar Veliqi");
+        project.setName("Helping ppl in neighbourhood");
         project.setCategory("Whatever");
         project.setMotivation("Helping ppl");
         project.setPhotoUrl("/a/b/c.jpg");
@@ -47,6 +57,7 @@ public class ProjectResource {
         long id = projectDao.insert(project);
         return id;
     }
+
 
 
 }

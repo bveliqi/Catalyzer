@@ -1,14 +1,34 @@
-# Database settings.
-database:
+#Database settings.
+#database:
 
   # the name of your JDBC driver
-  driverClass: org.h2.Driver
+#  driverClass: org.h2.Driver
 
   # the username
-  user: sa
+#  user: sa
 
   # the password
-  password: sa
+#  password: sa
 
   # the JDBC URL
-  url: jdbc:h2:./target/catalyzer
+#  url: jdbc:h2:./target/catalyzer
+
+
+
+# Database settings.
+database:
+  # the name of your JDBC driver
+  driverClass: com.mysql.jdbc.Driver
+
+  # the username
+  user: root
+
+  # the password
+  password: root
+
+  # the JDBC URL
+  url: jdbc:mysql://localhost:8889/catalyzer
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8

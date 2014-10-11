@@ -6,12 +6,9 @@ package com.hackzurich.catalyzer.api;
 public class Project {
 
 
-    public Project() {
-    }
-
-
     private long id;
-    private User author;
+//    private User author;
+    private String author;
     private String name;
     private String motivation;
     private String photoUrl;
@@ -31,11 +28,16 @@ public class Project {
         this.id = id;
     }
 
-    public User getAuthor() {
-        return author;
-    }
+//    public User getAuthor() {
+//        return author;
+//    }
 
-    public void setAuthor(User author) {
+    public String getAuthor() {return author;}
+
+//    public void setAuthor(User author) {
+//        this.author = author;
+//    }
+    public void setAuthor(String author) {
         this.author = author;
     }
 

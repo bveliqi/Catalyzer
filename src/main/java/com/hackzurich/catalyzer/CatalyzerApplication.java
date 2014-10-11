@@ -1,7 +1,9 @@
 package com.hackzurich.catalyzer;
 
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
+import com.hackzurich.catalyzer.jdbi.UserDao;
 import com.hackzurich.catalyzer.resources.ProjectResource;
+import com.hackzurich.catalyzer.resources.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
@@ -32,10 +34,12 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
                     Environment environment) throws ClassNotFoundException {
 
         final DBIFactory factory = new DBIFactory();
-        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "h2");
+        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "mysql");
         final ProjectDao projectDao = jdbi.onDemand(ProjectDao.class);
+        final UserDao userDao = jdbi.onDemand(UserDao.class);
 
         environment.jersey().register(new ProjectResource(projectDao));
+        environment.jersey().register(new UserResource(userDao));
 
     }
 
