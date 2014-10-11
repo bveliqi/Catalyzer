@@ -75,7 +75,7 @@
         <div class="container">
             <div class="intro-text">
                 <div class="intro-lead-in">Catalyzer user</div>
-                <div class="intro-heading"><textarea class="catalyzer-user-name">... loading ...</textarea></div>
+                <div class="intro-heading"><textarea class="centered catalyzer-user-name">... loading ...</textarea></div>
                 <a href="#services" class="page-scroll btn btn-xl">Projects</a>
             </div>
         </div>
@@ -86,54 +86,35 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading"><textarea class="catalyzer-user-name">... loading ...</textarea></h2>
-                    <h3 class="section-subheading text-muted"><textarea class="catalyzer-user-subtitle">...</textarea></h3>
+                    <h2 class="section-heading">
+                      <!-- Ugh, a table?  Ah, fuck it ... -->
+                      <center><table><tr><td><img class="img-circle img-responsive" src="img/avatar1.jpg" alt=""></td><td>
+                      <textarea class="centered catalyzer-user-name">... loading ...</textarea></td></tr></table></center>
+                    </h2>
+                    <h3 class="section-subheading text-muted"><textarea class="centered catalyzer-user-subtitle">...</textarea></h3>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-12">
-                    <ul class="timeline">
-                        <li>
-                            <div class="timeline-image">
-                                <img class="img-circle img-responsive" src="img/about/1.jpg" alt="">
-                            </div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h4>Points: <span class="catalyzer-user-total-points">...</span></h4>
-                                </div>
-                                <div class="timeline-body">
-                                    <textarea style="border: 0px; overflow:visible; width: 100%;" class="catalyzer-user-motivation">...</textarea>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image">
-                                <h4>Join<br>us!</h4>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="col-lg-12 text-center">
+                    <h4>Points: <span class="catalyzer-user-total-points">...</span></h4>
+                    <textarea style="border: 0px; overflow:visible; width: 80%;" class="catalyzer-user-motivation">...</textarea>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="participants" class="bg-light-gray">
+    <section id="projects" class="bg-light-gray">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Participants</h2>
+                    <h2 class="section-heading">Projects</h2>
                     <h3 class="section-subheading text-muted">
-                        This project is enabled by the following contributors:
+                        I'm participating in the following projects:
                     </h3>
                 </div>
             </div>
             <div class="row" id="catalyzer-project-participants">
-            </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted"><a href="">Participate</a>.</p>
-                </div>
             </div>
         </div>
     </section>
@@ -184,30 +165,35 @@ $(document).ready(function() {
     "avatar": 3,
 
     "subtitle": "I love this! Tralalala.",
+    "motivation":
+        "I signed up on Catalyzer because my friends Alejo and Steffi kept "
+        + "bugging me.  Since I gave it a try, I've participated in a few nice "
+        + "projects.\n\n"
+        + "Now I'm planning a few projects of my own, we'll see how it goes."
   }
 
   if (window.location.hash === "#alejo") {
-    displayProjectData(fakeData);
+    displayUserData(fakeData);
   } else {
     $.ajax({
-      url: projectUrl,
-    }).done(displayProjectData);
+      url: userUrl,
+    }).done(displayUserData);
   }
 });
 
 function prepareEditableObj(obj, field) {
   $(obj).on('blur', function(e) {
     var newValue = $(obj).val();
-    if (newValue === projectData[field]) {
+    if (newValue === userData[field]) {
       return;
     }
-    projectData[field] = newValue;
+    userData[field] = newValue;
     $("div.saving").css('display', 'inline');
     var data = {};
     data[field] = $(obj).val();
     $.ajax({
       type: "POST",
-      url: projectUrl + "/" + field,
+      url: userUrl + "/" + field,
       data: data,
     }).done(function() {
         $("div.saving").css('dislay', 'none');
@@ -235,7 +221,7 @@ var userData;
 // Functions to call when a given field changes.
 var listeners = {};
 
-function displayProjectData(data) {
+function displayUserData(data) {
   userData = data;
   var userName = data["name"];
   var email = data["email"];
@@ -248,6 +234,7 @@ function displayProjectData(data) {
   $(".catalyzer-user-total-points").text(totalPoints);
   prepareEditableObjs(".catalyzer-user-name", "name");
   prepareEditableObjs(".catalyzer-user-subtitle", "subtitle");
+  prepareEditableObjs(".catalyzer-user-motivation", "motivation");
 }
 </script>
 
