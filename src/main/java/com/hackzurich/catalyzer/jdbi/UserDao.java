@@ -11,15 +11,14 @@ import java.util.List;
  */
 public interface UserDao {
 
-
     @GetGeneratedKeys
     @SqlUpdate("insert into USERS " +
-            "(name, email, password, emailConfirmed, points, totalPoints, avatar)" +
+            "(name, email, password, emailConfirmed, points, totalPoints, avatar, motivation, subtitle)" +
             " values " +
-            "(:name, :email, :password, :emailConfirmed, :points, :totalPoints, :avatar)")
+            "(:name, :email, :password, :emailConfirmed, :points, :totalPoints, :avatar, :motivation, :subtitle)")
     long insert(@BindBean User user);
 
-
+    
     @MapResultAsBean
     @SqlQuery("select * from USERS where id = :id")
     User getById(@Bind("id") long id);
@@ -42,6 +41,13 @@ public interface UserDao {
     void removePoints(@Bind("id") long id, @Bind("lessPoints") int lessPoints);
 
 
+    @SqlUpdate("UPDATE USERS SET name = :name WHERE id = :id")
+    void updateName(@Bind("id") long id, @Bind("name") String name);
 
+    @SqlUpdate("UPDATE USERS SET motivation = :motivation WHERE id = :id")
+    void updateMotivation(@Bind("id") long id, @Bind("motivation") String motivation);
+
+    @SqlUpdate("UPDATE USERS SET subtitle = :subtitle WHERE id = :id")
+    void updateSubtitle(@Bind("id") long id, @Bind("subtitle") String subtitle);
 
 }

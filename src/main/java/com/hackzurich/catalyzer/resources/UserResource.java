@@ -52,6 +52,35 @@ public class UserResource {
         return Response.created(URI.create(String.valueOf(id))).build();
     }
 
+    @POST
+    @Path("{id}/name")
+    @Timed
+    public void updateName(@PathParam("id") long id, @FormParam("name") String name) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.updateName(id, name);
+    }
+
+    @POST
+    @Path("{id}/motivation")
+    @Timed
+    public void updateMotivation(@PathParam("id") long id, @FormParam("motivation") String motivation) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.updateMotivation(id, motivation);
+    }
+
+    @POST
+    @Path("{id}/subtitle")
+    @Timed
+    public void updateSubtitle(@PathParam("id") long id, @FormParam("subtitle") String subtitle) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.updateSubtitle(id, subtitle);
+    }
 
     @POST
     @Timed
