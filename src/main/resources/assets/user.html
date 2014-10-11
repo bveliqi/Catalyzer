@@ -117,7 +117,7 @@
         </div>
     </section>
 
-    <!-- Participants Section -->
+    <!-- Projects Section -->
     <section id="participants" class="bg-light-gray">
         <div class="container">
             <div class="row">
@@ -133,20 +133,6 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <p class="large text-muted"><a href="">Participate</a>.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Motivation Section -->
-    <section id="comments">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Comments</h2>
-                    <h3 class="section-subheading text-muted">
-                        There are no comments in this proyect yet.
-                    </h3>
                 </div>
             </div>
         </div>
@@ -184,12 +170,10 @@
     <script src="js/jquery-1.11.0.js"></script>
 
 <script type="text/javascript">
-var outerParts = document.URL.split("#");
-var parts = outerParts[0].split("/");
-var projectUrl = parts[0] + "//" + parts[1] + "/projects/" + outerParts[1];
+var userUrl = "/user/" + window.location.hash.substring(1);
 
 $(document).ready(function() {
-  console.log("Loading data from URL: " + projectUrl);
+  console.log("Loading data from URL: " + userUrl);
   var fakeData = {
     "name": "Silvio Valenti",
     "email": "silvius82@gmail.com",
@@ -199,10 +183,10 @@ $(document).ready(function() {
     "totalPoints": 1021,
     "avatar": 3,
 
-    "subtitle": "I'm loving it!",
+    "subtitle": "I love this! Tralalala.",
   }
 
-  if (outerParts[1] == "alejo") {
+  if (window.location.hash === "#alejo") {
     displayProjectData(fakeData);
   } else {
     $.ajax({
