@@ -58,6 +58,9 @@ public class ProjectResource {
     @Path("{id}/upvote/{points}")
     @Timed
     public void upvote(@PathParam("id") long id, @PathParam("points") int points) {
+        if(projectDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
         projectDao.upvote(id, points);
     }
 

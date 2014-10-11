@@ -50,5 +50,25 @@ public class UserResource {
     }
 
 
+    @POST
+    @Timed
+    @Path("{id}/points/add/{points}")
+    public void addPoints(@PathParam("id") long id, @PathParam("points") int points) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.addPoints(id, points);
+    }
+
+    @POST
+    @Timed
+    @Path("{id}/points/remove/{points}")
+    public void removePoints(@PathParam("id") long id, @PathParam("points") int points) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.removePoints(id, points);
+    }
+
 
 }
