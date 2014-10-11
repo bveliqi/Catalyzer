@@ -24,7 +24,7 @@ CREATE TABLE `PROJECTS` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `authorId` bigint(20) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `motivation` varchar(500) NOT NULL,
+  `motivation` varchar(4096) NOT NULL,
   `photoUrl` varchar(255) NOT NULL,
   `category` varchar(150) NOT NULL,
   `pointsThreshold` int(11) NOT NULL DEFAULT '50',
@@ -55,6 +55,8 @@ CREATE TABLE `USERS` (
   `avatar` int(11) DEFAULT NULL,
   `longitude` varchar(45) DEFAULT NULL,
   `latitude` varchar(45) DEFAULT NULL,
+  `motivation` varchar(4096) NOT NULL,
+  `subtitle` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 

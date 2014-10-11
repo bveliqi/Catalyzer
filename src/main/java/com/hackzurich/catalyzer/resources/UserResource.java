@@ -68,6 +68,35 @@ public class UserResource {
         return SALT + hashedPassword;
     }
 
+    @POST
+    @Path("{id}/name")
+    @Timed
+    public void updateName(@PathParam("id") long id, @FormParam("name") String name) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.updateName(id, name);
+    }
+
+    @POST
+    @Path("{id}/motivation")
+    @Timed
+    public void updateName(@PathParam("id") long id, @FormParam("motivation") String motivation) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.updateMotivation(id, name);
+    }
+
+    @POST
+    @Path("{id}/subtitle")
+    @Timed
+    public void updateName(@PathParam("id") long id, @FormParam("subtitle") String subtitle) {
+        if(userDao.getById(id) == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        userDao.updateSubtitle(id, subtitle);
+    }
 
     @POST
     @Timed
@@ -88,6 +117,4 @@ public class UserResource {
         }
         userDao.removePoints(id, points);
     }
-
-
 }

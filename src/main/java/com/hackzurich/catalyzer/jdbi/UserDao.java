@@ -11,33 +11,24 @@ import java.util.List;
  */
 public interface UserDao {
 
-
     @GetGeneratedKeys
     @SqlUpdate("insert into USERS " +
-            "(name, email, password, emailConfirmed, points, totalPoints, avatar)" +
+            "(name, email, password, emailConfirmed, points, totalPoints, avatar, motivation, subtitle)" +
             " values " +
-            "(:name, :email, :password, :emailConfirmed, :points, :totalPoints, :avatar)")
+            "(:name, :email, :password, :emailConfirmed, :points, :totalPoints, :avatar, :motivation, :subtitle)")
     long insert(@BindBean User user);
-
 
     @MapResultAsBean
     @SqlQuery("select * from USERS where id = :id")
     User getById(@Bind("id") long id);
 
-
     @MapResultAsBean
     @SqlQuery("select * from USERS LIMIT :from, :number")
     List<User> getAll(@Bind("from") int from, @Bind("number") int number);
 
-
     @SqlUpdate("UPDATE USERS SET points = points + :morePoints WHERE id = :id")
     void addPoints(@Bind("id") long id, @Bind("morePoints") int morePoints);
 
-
     @SqlUpdate("UPDATE USERS SET points = points - :lessPoints WHERE id = :id")
     void removePoints(@Bind("id") long id, @Bind("lessPoints") int lessPoints);
-
-
-
-
 }
