@@ -4,10 +4,13 @@ import com.hackzurich.catalyzer.jdbi.ProjectDao;
 import com.hackzurich.catalyzer.jdbi.UserDao;
 import com.hackzurich.catalyzer.resources.ProjectResource;
 import com.hackzurich.catalyzer.resources.UserResource;
+
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
 import org.skife.jdbi.v2.DBI;
 
 /**
@@ -27,6 +30,7 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
     @Override
     public void initialize(Bootstrap<CatalyzerConfiguration> bootstrap) {
         // nothing to do yet
+    	bootstrap.addBundle(new AssetsBundle());
     }
 
     @Override
