@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. Okt 2014 um 12:22
+-- Erstellungszeit: 11. Okt 2014 um 19:48
 -- Server Version: 5.5.25
 -- PHP-Version: 5.4.4
 
@@ -24,16 +24,19 @@ CREATE TABLE `PROJECTS` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `authorId` bigint(20) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `motivation` longtext NOT NULL,
+  `motivation` varchar(500) NOT NULL,
   `photoUrl` varchar(255) NOT NULL,
   `category` varchar(150) NOT NULL,
   `pointsThreshold` int(11) NOT NULL DEFAULT '50',
   `status` varchar(50) NOT NULL DEFAULT 'PENDING',
   `startDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `endDate` timestamp NULL DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `points` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `author_idx` (`authorId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -50,8 +53,10 @@ CREATE TABLE `USERS` (
   `points` int(11) NOT NULL DEFAULT '10',
   `totalPoints` int(11) NOT NULL DEFAULT '10',
   `avatar` int(11) DEFAULT NULL,
+  `longitude` varchar(45) DEFAULT NULL,
+  `latitude` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -68,7 +73,7 @@ CREATE TABLE `USERS_PROJECTS` (
   PRIMARY KEY (`id`),
   KEY `project_id_idx` (`projectId`),
   KEY `user_id_idx` (`userId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Constraints der exportierten Tabellen
@@ -86,4 +91,3 @@ ALTER TABLE `PROJECTS`
 ALTER TABLE `USERS_PROJECTS`
   ADD CONSTRAINT `project_id` FOREIGN KEY (`projectId`) REFERENCES `PROJECTS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `user_id` FOREIGN KEY (`userId`) REFERENCES `USERS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
