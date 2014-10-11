@@ -1,5 +1,7 @@
 package com.hackzurich.catalyzer;
 
+import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.auth.SimpleAuthenticator;
 import com.hackzurich.catalyzer.jdbi.ParticipationDao;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
 import com.hackzurich.catalyzer.jdbi.UserDao;
@@ -9,6 +11,7 @@ import com.hackzurich.catalyzer.resources.UserResource;
 
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.basic.BasicAuthProvider;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -51,6 +54,8 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
         environment.jersey().register(new ProjectResource(projectDao));
         environment.jersey().register(new UserResource(userDao));
         environment.jersey().register(new ParticipationResource(participationDao));
+
+        environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(userDao), "realm"));
 
     }
 

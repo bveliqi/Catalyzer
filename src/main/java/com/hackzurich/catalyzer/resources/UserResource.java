@@ -2,16 +2,13 @@ package com.hackzurich.catalyzer.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.auth.PasswordHashing;
 import com.hackzurich.catalyzer.jdbi.UserDao;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -21,14 +18,10 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
-    private static final String SALT = "EA333B0BFC3DFFE85";
-
     private final UserDao userDao;
-    final MessageDigest digestInstance;
 
-    public UserResource(UserDao userDao) throws NoSuchAlgorithmException {
+    public UserResource(UserDao userDao) {
         this.userDao = userDao;
-        digestInstance = MessageDigest.getInstance("SHA-256");
     }
 
 
@@ -53,19 +46,10 @@ public class UserResource {
     @POST
     @Timed
     public Response insert(User user) {
-        String finalPassword = hashPassword(user);
+        String finalPassword = PasswordHashing.hash(user.getPassword());
         user.setPassword(finalPassword);
         long id = userDao.insert(user);
         return Response.created(URI.create(String.valueOf(id))).build();
-    }
-
-    private String hashPassword(User user) {
-        String password = user.getPassword() == null ? "" : user.getPassword();
-        final byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
-        digestInstance.update(bytes);
-        final byte[] digest = digestInstance.digest();
-        final String hashedPassword = new HexBinaryAdapter().marshal(digest);
-        return SALT + hashedPassword;
     }
 
 

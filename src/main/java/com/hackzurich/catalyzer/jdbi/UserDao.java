@@ -24,6 +24,10 @@ public interface UserDao {
     @SqlQuery("select * from USERS where id = :id")
     User getById(@Bind("id") long id);
 
+    @MapResultAsBean
+    @SqlQuery("select * from USERS where name = :name")
+    User getByName(@Bind("name") String name);
+
 
     @MapResultAsBean
     @SqlQuery("select * from USERS LIMIT :from, :number")
