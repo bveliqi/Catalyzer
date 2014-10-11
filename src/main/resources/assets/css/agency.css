@@ -265,6 +265,13 @@ fieldset[disabled] .btn-xl.active {
     background-image: url(../img/charity_water.jpg);
 }
 
+header textarea, h4 textarea {
+  background-color: transparent;
+  vertical-align:middle;
+  text-align:center;
+  border: none;
+}
+
 header {
     text-align: center;
     color: #fff;

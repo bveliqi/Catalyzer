@@ -76,7 +76,7 @@
         <div class="container">
             <div class="intro-text">
                 <div class="intro-lead-in">Project:</div>
-                <div class="intro-heading catalyzer-project-name">... loading ...</div>
+                <div class="intro-heading"><textarea class="catalyzer-project-name">... loading ...</textarea></div>
                 <a href="#services" class="page-scroll btn btn-xl">Participate!</a>
             </div>
         </div>
@@ -100,12 +100,11 @@
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>Project: <span class="catalyzer-project-name">...</span></h4>
+                                    <h4>Project: <textarea class="catalyzer-project-name">...</textarea></h4>
                                     <h4 class="subheading catalyzer-project-category"></h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted catalyzer-project-motivation">...</p>
-                                    <textarea class="cataylzer-project-motivation">...</textarea>
+                                    <textarea style="border: 0px; overflow:visible; width: 100%;" class="catalyzer-project-motivation">...</textarea>
                                 </div>
                             </div>
                         </li>
@@ -187,9 +186,9 @@
     <script src="js/jquery-1.11.0.js"></script>
 
 <script type="text/javascript">
-var parts = document.URL.split("/");
-var url = parts[0] + "//" + parts[1] + "/projects/"
-    + parts[parts.length - 1].split("#")[1];
+var outerParts = document.URL.split("#");
+var parts = outerParts[0].split("/");
+var url = parts[0] + "//" + parts[1] + "/projects/" + outerParts[1];
 
 $(document).ready(function() {
   console.log("Loading data from URL: " + url);
@@ -245,13 +244,13 @@ $(document).ready(function() {
     "endDate": 1413031461905,
     "id": 14,
     "motivation":
-        "<p>Some parts of the Sihl river --close to Tuefi-- have become "
+        "Some parts of the Sihl river --close to Tuefi-- have become "
         + "relatively poluted.  We will gather there on a Saturday and spend a "
         + "few hours just collecting garbage.  Since the Tuefi closes at 12, "
-        + "we'll start early.</p>"
-        + "<p>Then, depending on the weather, "
-        + "we will drink some beers and cook some sausages.</p>"
-        + "<p>Join us and help us keep our river beautiful.</p>",
+        + "we'll start early.\n\n"
+        + "Then, depending on the weather, "
+        + "we will drink some beers and cook some sausages.\n\n"
+        + "Join us and help us keep our river beautiful.",
     "name": "Cleaning up the Sihl",
     "photoUrl": "file:///home/alejo/catalyzer-local/src/main/resources/assets/img/garbage_picking.jpg",
     "pointsThreshold": 30,
@@ -259,19 +258,53 @@ $(document).ready(function() {
     "status": "OK"
   }
 
-  setTimeout(
-      function() { displayProjectData(fakeData); },
-      2000);
-  $.ajax({
-    url: url,
-  });
-  // TODO: Add this: .done(displayProjectData);
+  if (outerParts[1] == "alejo") {
+    displayProjectData(fakeData);
+  } else {
+    $.ajax({
+      url: url,
+    }).done(displayProjectData);
+  }
 });
 
-function displayProjectData(data) {
-  if (console && console.log) {
-    console.log("Sample of data:", data);
+function prepareEditableObj(obj, field) {
+  $(obj).on('blur', function(e) {
+    var newValue = $(obj).val();
+    if (newValue === projectData[field]) {
+      return;
+    }
+    projectData[field] = newValue;
+    alert("Saving: " + newValue);
+    $.ajax({
+      type: "POST",
+      url: url,
+      data: { field: $(obj).val() },
+    });
+    listeners[field]();
+  });
+}
+
+function prepareEditableObjs(selector, fieldName) {
+  var objs = $(selector);
+  listeners[fieldName] = function() {
+    objs.text(projectData[fieldName]);
+    objs.val(projectData[fieldName]);
+    for (var i = 0; i < objs.length; i++) {
+      $(objs[i]).height(objs[i].scrollHeight);
+    }
   }
+  for (var i = 0; i < objs.length; i++) {
+    prepareEditableObj(objs[i], fieldName);
+  }
+  listeners[fieldName]();
+}
+
+var projectData;
+// Functions to call when a given field changes.
+var listeners = {};
+
+function displayProjectData(data) {
+  projectData = data;
   var projectName = data["name"];
   var imageUrl = data["photoUrl"];
   var motivation = data["motivation"];
@@ -279,9 +312,12 @@ function displayProjectData(data) {
   var category = data["category"];
 
   var editable = true;  // TODO: This should come from the server.
-  $(".catalyzer-project-name").text(projectName);
+
+
   $("header").css('background-image', "url(" + imageUrl + ")");
-  $(".catalyzer-project-motivation").val(motivation);
+  prepareEditableObjs(".catalyzer-project-name", "name");
+  prepareEditableObjs(".catalyzer-project-motivation", "motivation");
+
   $(".catalyzer-project-author").text(author);
   $(".catalyzer-project-category").text(category);
   var usersContainer = $("#catalyzer-project-participants");
