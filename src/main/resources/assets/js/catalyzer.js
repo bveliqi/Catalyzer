@@ -183,21 +183,34 @@ $(function() {
 		var reason = $("#participateModal" + id).find(".reason").text();
 		console.log("Participating in project " + id);
 		
-		var participation = {"projectId":id, "userId":"100000000", "role":"participant", "reason": reason, "state": "applying"};
+		var username = currentUser;
+		console.log("Username: " + username);
 		
 		var request = $.ajax({
-            type        :   "POST",
-            url         :   "/participation/",
-            data        :   JSON.stringify(participation),
-            contentType :   "application/json"
+            type        :   "GET",
+            url         :   "/user/id/" + username
 		}).done(function(data) {
-			showSuccess($("#participateModal" + id), "You joined successfully");
-		}).fail(function(data) {
-			if (data.status === 201) {
+			var userid = data;
+			console.log("User id: " + userid);
+			
+			var participation = {"projectId":id, "userId":userid, "role":"participant", "reason": reason, "state": "applying"};
+			
+			var request = $.ajax({
+	            type        :   "POST",
+	            url         :   "/participation/",
+	            data        :   JSON.stringify(participation),
+	            contentType :   "application/json"
+			}).done(function(data) {
 				showSuccess($("#participateModal" + id), "You joined successfully");
-			} else {
-				showError($("#participateModal" + id), "Something went wrong :(");
-			}
+			}).fail(function(data) {
+				if (data.status === 201) {
+					showSuccess($("#participateModal" + id), "You joined successfully");
+				} else {
+					showError($("#participateModal" + id), "Something went wrong :(");
+				}
+			});
+		}).fail(function(data) {
+			showError($("#participateModal" + id), "Something went wrong :(");
 		});
 		
 	});

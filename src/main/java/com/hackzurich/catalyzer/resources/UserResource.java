@@ -9,6 +9,7 @@ import io.dropwizard.auth.Auth;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.List;
@@ -39,6 +40,17 @@ public class UserResource {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return user;
+    }
+
+    @GET
+    @Path("id/{name}")
+    @Timed
+    public long getIdFromName(@PathParam("name") String name) {
+        final User user = userDao.getByName(name);
+        if (user == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return user.getId();
     }
 
 
@@ -118,7 +130,8 @@ public class UserResource {
     @Timed
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateName(@Auth(required = true) User user) {
-        return Response.ok().build();
+        final NewCookie cookie = new NewCookie("user", user.getName());
+        return Response.ok().cookie(cookie).build();
     }
 
 
