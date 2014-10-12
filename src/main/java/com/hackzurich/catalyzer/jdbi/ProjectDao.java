@@ -2,6 +2,8 @@ package com.hackzurich.catalyzer.jdbi;
 
 import com.hackzurich.catalyzer.api.Project;
 import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.api.UserProject;
+
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.helpers.MapResultAsBean;
 
