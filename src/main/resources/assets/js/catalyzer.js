@@ -183,24 +183,31 @@ $(function() {
 		var reason = $("#participateModal" + id).find(".reason").text();
 		console.log("Participating in project " + id);
 		
-		var userid = currentUser;
-		console.log("Userid: " + userid);
+		var username = currentUser;
+		console.log("Username: " + username);
 		
-		var participation = {"projectId":id, "userId":"100000000", "role":"participant", "reason": reason, "state": "applying"};
-		
-		var request = $.ajax({
-            type        :   "POST",
-            url         :   "/participation/",
-            data        :   JSON.stringify(participation),
-            contentType :   "application/json"
-		}).done(function(data) {
-			showSuccess($("#participateModal" + id), "You joined successfully");
-		}).fail(function(data) {
-			if (data.status === 201) {
+		$.get("/user/id/" + username, function(data) {
+			var userid = data;
+			
+			var participation = {"projectId":id, "userId":userid, "role":"participant", "reason": reason, "state": "applying"};
+			
+			var request = $.ajax({
+	            type        :   "POST",
+	            url         :   "/participation/",
+	            data        :   JSON.stringify(participation),
+	            contentType :   "application/json"
+			}).done(function(data) {
 				showSuccess($("#participateModal" + id), "You joined successfully");
-			} else {
-				showError($("#participateModal" + id), "Something went wrong :(");
-			}
+			}).fail(function(data) {
+				if (data.status === 201) {
+					showSuccess($("#participateModal" + id), "You joined successfully");
+				} else {
+					showError($("#participateModal" + id), "Something went wrong :(");
+				}
+			});
+			
+		}, function (err) {
+			showError($("#participateModal" + id), "Something went wrong :(");
 		});
 		
 	});
