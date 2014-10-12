@@ -7,7 +7,7 @@ public class UserProject {
 
     private long id;
     private String name;
-    private String reasion;
+    private String reason;
 
     public long getId() {
         return id;
