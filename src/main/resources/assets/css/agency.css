@@ -86,7 +86,7 @@ h6 {
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
-    color: #fff;
+    color: #000;
     background-color: #fed136;
 }
 
@@ -234,7 +234,7 @@ fieldset[disabled] .btn-xl.active {
 
 .navbar-default .navbar-nav>.active>a {
     border-radius: 0;
-    color: #fff;
+    color: #000;
     background-color: #fed136;
 }
 
@@ -983,4 +983,23 @@ body {
 
 .gap {
 	margin-bottom: 40px;
+}
+
+.btn-info {
+	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000;
+    margin-top: 10px;
+    background-color: #ccc;
+    border: 1px solid #bbb;
+}
+
+.catalyzer-project-name {
+	text-align: center;
+}
+
+.reason {
+	width: 500px; 
+	height: 200px;
 }
