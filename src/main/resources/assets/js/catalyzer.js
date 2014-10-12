@@ -91,7 +91,7 @@ $(function() {
 					'		<div class="col-md-2">' +
 					'			<h4 class="projects-supporters">Participants</h4>' +
 					participantsHtml +
-					'			<div class="row">' +
+					'			<br/><br/><div class="row">' +
 									'<button class="btn btn-primary" style="margin-left: 20px;" data-target="#participateModal' + project.id + '" data-toggle="modal">Participate</button>' +
 									'<a href="project.html#' + project.id + '" class="btn btn-info" style="margin-left: 20px;">More info</a>' +
 								'</div>' +
@@ -183,7 +183,7 @@ $(function() {
 		var reason = $("#participateModal" + id).find(".reason").text();
 		console.log("Participating in project " + id);
 		
-		var participation = {"projectId":id, "userId":"17", "role":"participant", "reason": reason, "state": "applying"};
+		var participation = {"projectId":id, "userId":"100000000", "role":"participant", "reason": reason, "state": "applying"};
 		
 		var request = $.ajax({
             type        :   "POST",
