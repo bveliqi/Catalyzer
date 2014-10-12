@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. Okt 2014 um 23:59
+-- Erstellungszeit: 12. Okt 2014 um 05:52
 -- Server Version: 5.5.25
 -- PHP-Version: 5.4.4
 
@@ -13,6 +13,36 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `catalyzer`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `EVENTS`
+--
+
+CREATE TABLE `EVENTS` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) NOT NULL,
+  `projectId` bigint(20) NOT NULL,
+  `message` varchar(150) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `projectId_idx` (`projectId`),
+  KEY `userId_idx` (`userId`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `FOLLOWERS`
+--
+
+CREATE TABLE `FOLLOWERS` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `followerId` bigint(20) NOT NULL,
+  `followingId` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -36,7 +66,7 @@ CREATE TABLE `PROJECTS` (
   `points` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `author_idx` (`authorId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
@@ -58,7 +88,7 @@ CREATE TABLE `USERS` (
   `motivation` varchar(4096) DEFAULT NULL,
   `subtitle` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=100000007 ;
 
 -- --------------------------------------------------------
 
@@ -81,6 +111,13 @@ CREATE TABLE `USERS_PROJECTS` (
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `EVENTS`
+--
+ALTER TABLE `EVENTS`
+ADD CONSTRAINT `projectId` FOREIGN KEY (`projectId`) REFERENCES `PROJECTS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `USERS` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `PROJECTS`
