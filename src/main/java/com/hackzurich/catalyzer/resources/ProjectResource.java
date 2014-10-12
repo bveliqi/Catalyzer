@@ -3,13 +3,16 @@ package com.hackzurich.catalyzer.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Project;
 import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.api.UserProject;
 import com.hackzurich.catalyzer.jdbi.EventDao;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
+
 import io.dropwizard.auth.Auth;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import java.net.URI;
 import java.util.List;
 
