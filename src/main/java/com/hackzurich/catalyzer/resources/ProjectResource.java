@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Project;
 import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
+import io.dropwizard.auth.Auth;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -55,7 +56,7 @@ public class ProjectResource {
 
     @POST
     @Timed
-    public Response insert(Project project) {
+    public Response insert(@Auth(required = false) User user, Project project) {
         long id = projectDao.insert(project);
         return Response.created(URI.create(String.valueOf(id))).build();
     }
@@ -63,7 +64,7 @@ public class ProjectResource {
     @POST
     @Path("{id}/upvote/{points}")
     @Timed
-    public void upvote(@PathParam("id") long id, @PathParam("points") int points) {
+    public void upvote(@Auth(required = false) User user, @PathParam("id") long id, @PathParam("points") int points) {
         if(projectDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -74,7 +75,7 @@ public class ProjectResource {
     @POST
     @Path("{id}/name")
     @Timed
-    public void updateName(@PathParam("id") long id, @FormParam("name") String name) {
+    public void updateName(@Auth(required = false) User user, @PathParam("id") long id, @FormParam("name") String name) {
         if(projectDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -85,7 +86,8 @@ public class ProjectResource {
     @POST
     @Path("{id}/motivation")
     @Timed
-    public void updateMotivation(@PathParam("id") long id, @FormParam("motivation") String motivation) {
+    public void updateMotivation(@Auth(required = false) User user,
+                                 @PathParam("id") long id, @FormParam("motivation") String motivation) {
         if(projectDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

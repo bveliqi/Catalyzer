@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.auth.PasswordHashing;
 import com.hackzurich.catalyzer.jdbi.UserDao;
+import io.dropwizard.auth.Auth;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -55,7 +56,7 @@ public class UserResource {
     @POST
     @Path("{id}/name")
     @Timed
-    public void updateName(@PathParam("id") long id, @FormParam("name") String name) {
+    public void updateName(@Auth(required = false) User user, @PathParam("id") long id, @FormParam("name") String name) {
         if(userDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -65,7 +66,8 @@ public class UserResource {
     @POST
     @Path("{id}/motivation")
     @Timed
-    public void updateMotivation(@PathParam("id") long id, @FormParam("motivation") String motivation) {
+    public void updateMotivation(@Auth(required = false) User user,
+                                 @PathParam("id") long id, @FormParam("motivation") String motivation) {
         if(userDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -75,7 +77,8 @@ public class UserResource {
     @POST
     @Path("{id}/subtitle")
     @Timed
-    public void updateSubtitle(@PathParam("id") long id, @FormParam("subtitle") String subtitle) {
+    public void updateSubtitle(@Auth(required = false) User user,
+                               @PathParam("id") long id, @FormParam("subtitle") String subtitle) {
         if(userDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -85,7 +88,8 @@ public class UserResource {
     @POST
     @Timed
     @Path("{id}/points/add/{points}")
-    public void addPoints(@PathParam("id") long id, @PathParam("points") int points) {
+    public void addPoints(@Auth(required = false) User user,
+                          @PathParam("id") long id, @PathParam("points") int points) {
         if (userDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
@@ -95,7 +99,8 @@ public class UserResource {
     @POST
     @Timed
     @Path("{id}/points/remove/{points}")
-    public void removePoints(@PathParam("id") long id, @PathParam("points") int points) {
+    public void removePoints(@Auth(required = false) User user,
+                             @PathParam("id") long id, @PathParam("points") int points) {
         if (userDao.getById(id) == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

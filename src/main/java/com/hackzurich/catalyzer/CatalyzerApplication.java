@@ -2,9 +2,11 @@ package com.hackzurich.catalyzer;
 
 import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.auth.SimpleAuthenticator;
+import com.hackzurich.catalyzer.jdbi.EventDao;
 import com.hackzurich.catalyzer.jdbi.ParticipationDao;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
 import com.hackzurich.catalyzer.jdbi.UserDao;
+import com.hackzurich.catalyzer.resources.EventResource;
 import com.hackzurich.catalyzer.resources.ParticipationResource;
 import com.hackzurich.catalyzer.resources.ProjectResource;
 import com.hackzurich.catalyzer.resources.UserResource;
@@ -50,10 +52,12 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
         final ProjectDao projectDao = jdbi.onDemand(ProjectDao.class);
         final UserDao userDao = jdbi.onDemand(UserDao.class);
         final ParticipationDao participationDao = jdbi.onDemand(ParticipationDao.class);
+        final EventDao eventDao = jdbi.onDemand(EventDao.class);
 
         environment.jersey().register(new ProjectResource(projectDao));
         environment.jersey().register(new UserResource(userDao));
         environment.jersey().register(new ParticipationResource(participationDao));
+        environment.jersey().register(new EventResource(eventDao));
 
         environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(userDao), "realm"));
 

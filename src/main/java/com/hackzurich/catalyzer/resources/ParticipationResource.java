@@ -3,7 +3,9 @@ package com.hackzurich.catalyzer.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Participation;
 import com.hackzurich.catalyzer.api.Project;
+import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.jdbi.ParticipationDao;
+import io.dropwizard.auth.Auth;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -35,7 +37,7 @@ public class ParticipationResource {
 
     @POST
     @Timed
-    public Response insert(Participation participation) {
+    public Response insert(@Auth(required = false) User user, Participation participation) {
         final long id = participationDao.insert(participation);
         return Response.created(URI.create(String.valueOf(id))).build();
     }
