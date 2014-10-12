@@ -49,8 +49,8 @@ public class ProjectResource {
         if(project == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        final List<User> acceptedUsers = projectDao.getAllAcceptedUsers(id);
-        final List<User> appliedUsers = projectDao.getAllAppliedUsers(id);
+        final List<UserProject> acceptedUsers = projectDao.getAllAcceptedUsers(id);
+        final List<UserProject> appliedUsers = projectDao.getAllAppliedUsers(id);
         project.setApplyingUsers(appliedUsers);
         project.setApprovedUsers(acceptedUsers);
         return project;
