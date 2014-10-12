@@ -1,12 +1,12 @@
 INSERT INTO `USERS` (`id`, `name`, `avatar`, `motivation`, `subtitle`) VALUES
-(100000000, 'Behar Veliqi', '5', "Make the world a better place.","Admin"),
-(100000001, 'Stephanie Stroka', '1', "I started Catalyzer with Alejo and Behar.  I'm very happy that we've managed to turn this site into such a positive force for good!", 'I hack for fun and profit!'),
-(100000002, 'Alejandro Forero Cuervo', '2', 'We started Catalyzer (with Behar and Steffi) to try to encourage people to participate in charitable projects and, through that, bring them together.', 'Lets see how far we can go!'),
-(100000003, 'Blue Dragon', '3', "I'm a very secretive person, but I want to help make the world better!", "Growl!"),
-(100000004, 'Silvio Valenti', '4',
+(100000000, 'Behar Veliqi', 5, "Make the world a better place.","Admin"),
+(100000001, 'Stephanie Stroka', 1, "I started Catalyzer with Alejo and Behar.  I'm very happy that we've managed to turn this site into such a positive force for good!", 'I hack for fun and profit!'),
+(100000002, 'Alejandro Forero Cuervo', 2, 'We started Catalyzer (with Behar and Steffi) to try to encourage people to participate in charitable projects and, through that, bring them together.', 'Lets see how far we can go!'),
+(100000003, 'Blue Dragon', 3, "I'm a very secretive person, but I want to help make the world better!", "Growl!"),
+(100000004, 'Silvio Valenti', 4,
   "I signed up on Catalyzer because my friends Alejo and Steffi kept bugging me.  Since I gave it a try, I've participated in a few nice projects.\n\nNow I'm planning a few projects of my own, we'll see how it goes.",
   "Oh sole mio!"),
-(100000005, 'Julia Martynczuk', '5',
+(100000005, 'Julia Martynczuk', 6,
   "I'm happy to be part of Catalyzer.\n\nI decided to join to organize my projects through Catalyzer, which helps me reach out to others who may want to contribute.\n\nLets make the world nicer.",
   "The joy of living!");
 

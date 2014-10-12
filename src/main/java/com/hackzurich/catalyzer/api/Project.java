@@ -20,8 +20,8 @@ public class Project {
     private String category; // TODO: better to use enum?
     private int pointsThreshold;
     private String status;
-    private List<User> applyingUsers;
-    private List<User> approvedUsers;
+    private List<UserProject> applyingUsers;
+    private List<UserProject> approvedUsers;
     private DateTime startDate;
     private DateTime endDate;
     private long latitude;
@@ -94,19 +94,19 @@ public class Project {
         this.status = status;
     }
 
-    public List<User> getApplyingUsers() {
+    public List<UserProject> getApplyingUsers() {
         return applyingUsers;
     }
 
-    public void setApplyingUsers(List<User> applyingUsers) {
+    public void setApplyingUsers(List<UserProject> applyingUsers) {
         this.applyingUsers = applyingUsers;
     }
 
-    public List<User> getApprovedUsers() {
+    public List<UserProject> getApprovedUsers() {
         return approvedUsers;
     }
 
-    public void setApprovedUsers(List<User> approvedUsers) {
+    public void setApprovedUsers(List<UserProject> approvedUsers) {
         this.approvedUsers = approvedUsers;
     }
 

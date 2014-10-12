@@ -2,6 +2,8 @@ package com.hackzurich.catalyzer.jdbi;
 
 import com.hackzurich.catalyzer.api.Project;
 import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.api.UserProject;
+
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.helpers.MapResultAsBean;
 
@@ -37,19 +39,19 @@ public interface ProjectDao {
     List<Project> getTopProjects(@Bind("from") int from, @Bind("number") int number);
 
     @MapResultAsBean
-    @SqlQuery("SELECT u.id, u.name" +
+    @SqlQuery("SELECT u.id, u.name, up.reason, u.avatar" +
             " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
             " WHERE up.projectId = :id AND up.state = 'ACCEPTED' " +
             " AND p.id = up.projectId AND u.id = up.userId")
-    List<User> getAllAcceptedUsers(@Bind("id") long id);
+    List<UserProject> getAllAcceptedUsers(@Bind("id") long id);
 
 
     @MapResultAsBean
-    @SqlQuery("SELECT u.id, u.name" +
+    @SqlQuery("SELECT u.id, u.name, up.reason, u.avatar" +
             " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
             " WHERE up.projectId = :id AND up.state = 'APPLYING' " +
             " AND p.id = up.projectId AND u.id = up.userId")
-    List<User> getAllAppliedUsers(@Bind("id") long id);
+    List<UserProject> getAllAppliedUsers(@Bind("id") long id);
 
 
     @SqlUpdate("UPDATE PROJECTS SET points = points + :morePoints WHERE id = :id")

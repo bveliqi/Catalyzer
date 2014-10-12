@@ -997,6 +997,7 @@ body {
 
 .catalyzer-project-name {
 	text-align: center;
+	text-shadow: 2px 2px 8px #555;
 }
 
 .reason {
