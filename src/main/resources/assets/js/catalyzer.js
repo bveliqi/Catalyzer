@@ -186,8 +186,12 @@ $(function() {
 		var username = currentUser;
 		console.log("Username: " + username);
 		
-		$.get("/user/id/" + username, function(data) {
+		var request = $.ajax({
+            type        :   "GET",
+            url         :   "/user/id/" + username
+		}).done(function(data) {
 			var userid = data;
+			console.log("User id: " + userid);
 			
 			var participation = {"projectId":id, "userId":userid, "role":"participant", "reason": reason, "state": "applying"};
 			
@@ -205,8 +209,7 @@ $(function() {
 					showError($("#participateModal" + id), "Something went wrong :(");
 				}
 			});
-			
-		}, function (err) {
+		}).fail(function(data) {
 			showError($("#participateModal" + id), "Something went wrong :(");
 		});
 		
