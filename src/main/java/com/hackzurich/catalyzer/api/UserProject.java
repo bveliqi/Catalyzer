@@ -7,7 +7,8 @@ public class UserProject {
 
     private long id;
     private String name;
-    private String reasion;
+    private String reason;
+    private int avatar;
 
     public long getId() {
         return id;
@@ -31,5 +32,13 @@ public class UserProject {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public int getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(int avatar) {
+        this.avatar = avatar;
     }
 }

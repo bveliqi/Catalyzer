@@ -37,7 +37,7 @@ public interface ProjectDao {
     List<Project> getTopProjects(@Bind("from") int from, @Bind("number") int number);
 
     @MapResultAsBean
-    @SqlQuery("SELECT u.id, u.name, up.reason" +
+    @SqlQuery("SELECT u.id, u.name, up.reason, u.avatar" +
             " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
             " WHERE up.projectId = :id AND up.state = 'ACCEPTED' " +
             " AND p.id = up.projectId AND u.id = up.userId")
@@ -45,7 +45,7 @@ public interface ProjectDao {
 
 
     @MapResultAsBean
-    @SqlQuery("SELECT u.id, u.name, up.reason" +
+    @SqlQuery("SELECT u.id, u.name, up.reason, u.avatar" +
             " FROM catalyzer.PROJECTS as p JOIN catalyzer.USERS as u JOIN catalyzer.USERS_PROJECTS as up" +
             " WHERE up.projectId = :id AND up.state = 'APPLYING' " +
             " AND p.id = up.projectId AND u.id = up.userId")
