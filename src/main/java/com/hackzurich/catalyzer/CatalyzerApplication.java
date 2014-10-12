@@ -54,9 +54,9 @@ public class CatalyzerApplication extends Application<CatalyzerConfiguration> {
         final ParticipationDao participationDao = jdbi.onDemand(ParticipationDao.class);
         final EventDao eventDao = jdbi.onDemand(EventDao.class);
 
-        environment.jersey().register(new ProjectResource(projectDao));
-        environment.jersey().register(new UserResource(userDao));
-        environment.jersey().register(new ParticipationResource(participationDao));
+        environment.jersey().register(new ProjectResource(projectDao, eventDao));
+        environment.jersey().register(new UserResource(userDao, eventDao));
+        environment.jersey().register(new ParticipationResource(participationDao, eventDao));
         environment.jersey().register(new EventResource(eventDao));
 
         environment.jersey().register(new BasicAuthProvider<User>(new SimpleAuthenticator(userDao), "realm"));
