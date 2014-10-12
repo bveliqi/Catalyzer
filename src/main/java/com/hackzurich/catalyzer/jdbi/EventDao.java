@@ -43,4 +43,11 @@ public interface EventDao {
             "(:userId, :projectId, :message, :timestamp)")
     long insert(@BindBean Event event);
 
+    @GetGeneratedKeys
+    @SqlUpdate("INSERT INTO EVENTS " +
+            "(userId, projectId, message)" +
+            " values " +
+            "(:userId, :projectId, :message)")
+    long insert(@Bind("userId") long userId, @Bind("projectId") long projectId, @Bind("message") String message);
+
 }

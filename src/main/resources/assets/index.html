@@ -66,9 +66,10 @@
 					<li><a class="page-scroll" href="/profile.html">Profile</a></li>
 					<li><a class="page-scroll" href="#communities">Communities</a>
 					</li>
-					<li><a class="page-scroll" href="#about">About</a></li>
-				</ul>
-			</div>
+                    <li><a class="page-scroll" href="#about">About</a></li>
+                    <li id="loginLink"><a class="page-scroll" href="#about" data-toggle="modal" data-target="#loginModal">Login | Sign Up</a></li>
+                </ul>
+            </div>
 			<!-- /.navbar-collapse -->
 		</div>
 		<!-- /.container-fluid -->
@@ -86,7 +87,57 @@
 		</div>
 	</header>
 
-	<!-- Projects Section -->
+
+
+    <!-- LOGIN / SIGN UP START -->
+    <div class="modal fade" id="loginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">LOG IN   |   SIGN UP</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            Aleady have an account?
+                            <br/><br/>
+                            <div class="form-group">
+                                <input id="loginUsername" type="text" class="form-control" id="name" placeholder="Username:">
+                            </div>
+                            <div class="form-group">
+                                <input id="loginPassword" type="password" class="form-control" id="password" placeholder="Password:">
+                            </div>
+                            <button type="submit" class="btn btn-default" id="loginBtn">Log In!</button>
+                            <br/>
+                            <div id="loginFail" class="alert alert-danger" style="display: none">Oh Oh... Try again!</div>
+                        </div>
+                        <div class="col-lg-6">
+                            Register now!
+                            <br/><br/>
+                            <div class="form-group">
+                                <input id="registerEmail" type="email" class="form-control" placeholder="Email:">
+                            </div>
+                            <div class="form-group">
+                                <input id="registerUsername" type="text" class="form-control" placeholder="Username:">
+                            </div>
+                            <div class="form-group">
+                                <input id="registerPassword" type="password" class="form-control" placeholder="Password:">
+                            </div>
+                            <button type="submit" class="btn btn-default" id="registerBtn">Register!</button>
+                            <br/>
+                            <div id="registerFail" class="alert alert-danger" style="display: none">Oh Oh... Try again!</div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- LOGIN / SIGN UP END -->
+
+
+
+    <!-- Projects Section -->
 	<section id="projects">
 		<div class="container projects">
 		</div>
@@ -110,8 +161,10 @@
 
 	<!-- Custom Theme JavaScript -->
 	<script src="js/agency.js"></script>
-	
-	<script src="js/catalyzer.js"></script>
+
+    <script src="js/catalyzer.js"></script>
+
+    <script src="js/login.js"></script>
 
 
 

@@ -3,6 +3,7 @@ package com.hackzurich.catalyzer.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.User;
 import com.hackzurich.catalyzer.auth.PasswordHashing;
+import com.hackzurich.catalyzer.jdbi.EventDao;
 import com.hackzurich.catalyzer.jdbi.UserDao;
 import io.dropwizard.auth.Auth;
 
@@ -15,14 +16,17 @@ import java.util.List;
 /**
  * Created by behar on 11.10.14.
  */
-@Path("/user")
+@Path("user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {
 
     private final UserDao userDao;
+    private final EventDao eventDao;
 
-    public UserResource(UserDao userDao) {
+
+    public UserResource(UserDao userDao, EventDao eventDao) {
         this.userDao = userDao;
+        this.eventDao = eventDao;
     }
 
 
@@ -46,6 +50,8 @@ public class UserResource {
 
     @POST
     @Timed
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response insert(User user) {
         String finalPassword = PasswordHashing.hash(user.getPassword());
         user.setPassword(finalPassword);
@@ -105,6 +111,14 @@ public class UserResource {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         userDao.removePoints(id, points);
+    }
+
+    @POST
+    @Path("login")
+    @Timed
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response updateName(@Auth(required = true) User user) {
+        return Response.ok().build();
     }
 
 

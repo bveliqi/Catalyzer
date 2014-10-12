@@ -3,6 +3,7 @@ package com.hackzurich.catalyzer.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Project;
 import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.jdbi.EventDao;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
 import io.dropwizard.auth.Auth;
 
@@ -20,9 +21,11 @@ import java.util.List;
 public class ProjectResource {
 
     private final ProjectDao projectDao;
+    private final EventDao eventDao;
 
-    public ProjectResource(ProjectDao projectDao) {
+    public ProjectResource(ProjectDao projectDao, EventDao eventDao) {
         this.projectDao = projectDao;
+        this.eventDao = eventDao;
     }
 
     @GET

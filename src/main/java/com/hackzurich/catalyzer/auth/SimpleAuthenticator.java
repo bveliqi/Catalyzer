@@ -24,7 +24,8 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
         final String username = credentials.getUsername();
         final User user = userDao.getByName(username);
         if(user == null) {
-            throw new AuthenticationException("User with username " + username + " does not exist.");
+//            throw new AuthenticationException("User with username " + username + " does not exist.");
+            return Optional.absent();
         }
         final String storedPassword = user.getPassword();
         final String givenPassword = credentials.getPassword();

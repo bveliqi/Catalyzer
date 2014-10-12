@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.hackzurich.catalyzer.api.Participation;
 import com.hackzurich.catalyzer.api.Project;
 import com.hackzurich.catalyzer.api.User;
+import com.hackzurich.catalyzer.jdbi.EventDao;
 import com.hackzurich.catalyzer.jdbi.ParticipationDao;
 import io.dropwizard.auth.Auth;
 
@@ -21,9 +22,11 @@ import java.util.List;
 public class ParticipationResource {
 
     private final ParticipationDao participationDao;
+    private final EventDao eventDao;
 
-    public ParticipationResource(ParticipationDao participationDao) {
+    public ParticipationResource(ParticipationDao participationDao, EventDao eventDao) {
         this.participationDao = participationDao;
+        this.eventDao = eventDao;
     }
 
 
@@ -39,6 +42,10 @@ public class ParticipationResource {
     @Timed
     public Response insert(@Auth(required = false) User user, Participation participation) {
         final long id = participationDao.insert(participation);
+        eventDao.insert(participation.getUserId(), participation.getProjectId(),
+                String.format("User %s participates now in project '%s' (role: %s): %s",
+                        participation.getUserId(), participation.getProjectId(), participation.getRole(),
+                        participation.getReason()));
         return Response.created(URI.create(String.valueOf(id))).build();
     }
 

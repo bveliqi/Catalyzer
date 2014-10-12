@@ -1,6 +1,7 @@
 package com.hackzurich.catalyzer.resources;
 
 import com.hackzurich.catalyzer.api.Project;
+import com.hackzurich.catalyzer.jdbi.EventDao;
 import com.hackzurich.catalyzer.jdbi.ProjectDao;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.joda.time.DateTime;
@@ -26,7 +27,7 @@ public class ProjectResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-            .addResource(new ProjectResource(dao))
+            .addResource(new ProjectResource(dao, mock(EventDao.class)))
             .build();
 
     @Before
