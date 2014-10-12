@@ -183,6 +183,9 @@ $(function() {
 		var reason = $("#participateModal" + id).find(".reason").text();
 		console.log("Participating in project " + id);
 		
+		var userid = currentUser;
+		console.log("Userid: " + userid);
+		
 		var participation = {"projectId":id, "userId":"100000000", "role":"participant", "reason": reason, "state": "applying"};
 		
 		var request = $.ajax({

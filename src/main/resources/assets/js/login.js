@@ -1,3 +1,5 @@
+var currentUser;
+
 $(function () {
 
     $('#loginBtn').on('click', function () {
@@ -30,8 +32,11 @@ $(function () {
                 $('#loginModal').modal('hide');
                 $('#loginLink').html("<span>Logged in as: <br/>" + $username + "!</span>")
                     .css('color', 'white').css('font-wight', 'bold');
-                var header = "Basic " + btoa($username + ":" + $password);
-                document.cookie = "Authorization=" + header;
+//                var header = "Basic " + btoa($username + ":" + $password);
+//                document.cookie = "Authorization=" + header;
+                
+                currentUser = $username;
+                
             }).fail(function () {
                 $('#loginFail').fadeIn();
             });
